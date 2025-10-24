@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Auth\CreateUserRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,17 +11,13 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends ApiController
 {
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
+        $validated = $request->validated();
 
-        $request->validate([
-            'email' => 'required|string|email|exists:users,email',
-            'password' => 'required|string',
-        ]);
+        $user = User::where('email', $validated['email'])->first();
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             return $this->respondError('Invalid credentials');
         }
 
@@ -31,18 +29,13 @@ class AuthController extends ApiController
         ]);
     }
 
-    public function register(Request $request)
+    public function register(CreateUserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
+        $validated = $request->validated();
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
