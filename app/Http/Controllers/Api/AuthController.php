@@ -13,7 +13,7 @@ class AuthController extends ApiController
     {
 
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|exists:users,email',
             'password' => 'required|string',
         ]);
 
