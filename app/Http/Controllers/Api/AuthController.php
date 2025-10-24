@@ -25,7 +25,7 @@ class AuthController extends ApiController
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return $this->respondCreated([
+        return $this->respondWithSuccess([
             'user' => $user,
             'token' => $token,
         ]);

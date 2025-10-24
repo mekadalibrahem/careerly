@@ -22,7 +22,7 @@ class UserLoginTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertJson([
                 'user' => [
                     'name' => $user->name,
@@ -43,7 +43,7 @@ class UserLoginTest extends TestCase
         ]);
         $response->assertStatus(400)
             ->assertJson([
-                'error' =>"Invalid credentials"
+                'error' => "Invalid credentials"
             ]);
     }
 }
