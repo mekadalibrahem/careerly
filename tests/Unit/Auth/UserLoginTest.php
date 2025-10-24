@@ -46,4 +46,30 @@ class UserLoginTest extends TestCase
                 'error' => "Invalid credentials"
             ]);
     }
+    public function test_login_with_invlaid_email(): void
+    {
+        $user = User::factory()->create();
+        $this->assertDatabaseHas('users', [
+            'email' => $user->email
+        ]);
+        $response = $this->postJson(self::$API_PREFIX . 'login', [
+            'email' => "test_emial_invlaid",
+            'password' => 'password',
+        ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+    }
+    public function test_login_with_not_exists_email(): void
+    {
+        $userEmail = "notRegister@gmail.com";
+        $this->assertDatabaseMissing('users', [
+            'email' => $userEmail
+        ]);
+        $response = $this->postJson(self::$API_PREFIX . 'login', [
+            'email' => $userEmail,
+            'password' => 'password',
+        ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+    }
 }
