@@ -3,6 +3,7 @@
 namespace Tests\Unit\Auth;
 
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -17,6 +18,8 @@ class UserRegisterTest extends TestCase
         $response = $this->postJson(self::$API_PREFIX . 'register', [
             'name' => "testname",
             'email' => "testEmail@example.com",
+            'role' => UserRolesEnums::USER(),
+            'title' => "job title",
             'password' => "password",
             'password_confirmation' => 'password'
 
@@ -41,6 +44,8 @@ class UserRegisterTest extends TestCase
             'name' => "testname",
             'email' => "testEmailexample.com",
             'password' => "password",
+            'role' => UserRolesEnums::USER(),
+            'title' => "job title",
             'password_confirmation' => 'password'
 
         ]);
@@ -53,6 +58,8 @@ class UserRegisterTest extends TestCase
             'name' => "testname",
             'email' => "testEmail@example.com",
             'password' => "password",
+            'role' => UserRolesEnums::USER(),
+            'title' => "job title",
             'password_confirmation' => 'password-diff'
 
         ]);
@@ -69,10 +76,27 @@ class UserRegisterTest extends TestCase
             'name' => "testname",
             'email' => $user->email,
             'password' => "password",
+            'role' => UserRolesEnums::USER(),
+            'title' => "job title",
             'password_confirmation' => 'password'
 
         ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
+    }
+    public function test_create_user_role_invalid(): void
+    {
+
+        $response = $this->postJson(self::$API_PREFIX . 'register', [
+            'name' => "testname",
+            'email' => "test@gmail.com",
+            'password' => "password",
+            'role' => "invalid role",
+            'title' => "job title",
+            'password_confirmation' => 'password'
+
+        ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['role']);
     }
 }
