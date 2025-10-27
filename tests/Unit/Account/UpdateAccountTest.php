@@ -3,6 +3,7 @@
 namespace Tests\Unit\Account;
 
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +15,8 @@ class UpdateAccountTest extends TestCase
         $user = User::factory()->create();
         $response = $this->putJson(self::$API_PREFIX . "user/$user->id/update", [
             'name' => "newName",
-            "email" => "newEmail@gmail.local"
+            "email" => "newEmail@gmail.local",
+            'title' => $user->title
         ]);
         $response->assertStatus(401);
     }
@@ -26,7 +28,8 @@ class UpdateAccountTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->putJson(self::$API_PREFIX . "user/$user->id/update", [
                 'name' => "newName",
-                "email" => "newEmail@gmail.local"
+                "email" => "newEmail@gmail.local",
+                'title' => $user->title
             ]);
         $response->assertStatus(200);
 
@@ -43,7 +46,8 @@ class UpdateAccountTest extends TestCase
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->putJson(self::$API_PREFIX . "user/$user->id/update", [
                 'name' => "newName",
-                "email" => "newEmailgmail.local"
+                "email" => "newEmailgmail.local",
+                'title' => $user->title
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['email']);

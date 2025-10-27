@@ -33,8 +33,9 @@ class AccountController extends ApiController
         $validated = $request->validated();
         $user = Auth::user();
 
-        $user->name = $validated['name'];
+        $user->name  = $validated['name'];
         $user->email = $validated['email'];
+        $user->title = $validated['title'];
         if ($user->save()) {
             return $this->respondWithSuccess(["message" => "Account updated"]);
         } else {
