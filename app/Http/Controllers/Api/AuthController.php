@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Auth\CreateUserRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,6 +36,8 @@ class AuthController extends ApiController
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'role' => $validated['role'],
+            'title' => $validated['title'],
             'password' => Hash::make($validated['password']),
         ]);
 
