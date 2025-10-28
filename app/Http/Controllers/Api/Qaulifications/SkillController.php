@@ -82,8 +82,17 @@ class SkillController extends ApiController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Skill $skill)
+    public function destroy(User $user, Skill $skill)
     {
-        //
+        try {
+            if ($skill) {
+
+                $skill->delete();
+                return $this->respondOk("Item deleted");
+            }
+            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+        } catch (\Throwable $th) {
+            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+        }
     }
 }
