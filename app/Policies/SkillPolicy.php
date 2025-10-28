@@ -22,7 +22,7 @@ class SkillPolicy
      */
     public function view(User $user, Skill $skill): bool
     {
-        return $skill->id == $user->id;
+        return true;
     }
 
     /**
@@ -30,7 +30,11 @@ class SkillPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRolesEnums::USER();
+
+        if ($user->role == UserRolesEnums::USER()) {
+            return true;
+        }
+        return false;
     }
 
     /**
