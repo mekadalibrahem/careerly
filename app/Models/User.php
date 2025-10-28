@@ -49,4 +49,35 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Get the projects for the qualification.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Get the courses for the qualification.
+     */
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+    /**
+     * Get the skills for the qualification.
+     */
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
+
+    /**
+     * Get the educations for the qualification.
+     */
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
 }
