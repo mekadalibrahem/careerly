@@ -8,6 +8,7 @@ use App\Http\Requests\Qaulifications\StoreSkillRequest;
 use App\Http\Requests\Qaulifications\UpdateSkillRequest;
 
 use App\Models\Skill;
+use App\Models\User;
 use App\Modules\Users\Enums\UserRolesEnums;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -59,9 +60,23 @@ class SkillController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSkillRequest $request, Skill $skill)
+    public function update(UpdateSkillRequest $request, User $user, Skill $skill)
     {
-        //
+
+        $validation = $request->validated();
+        try {
+            $skill->name = $validation['name'];
+            if ($skill->save()) {
+                return $this->respondWithSuccess([
+                    "message" => "skill updated",
+                    "skill" => $skill
+                ]);
+            } else {
+                return $this->respondError("ERROR UPDATE SKILL ");
+            }
+        } catch (\Throwable $th) {
+            return $this->respondError("ERROR UPDATE SKILL " . $th->getMessage());
+        }
     }
 
     /**

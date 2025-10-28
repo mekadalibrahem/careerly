@@ -42,7 +42,8 @@ class SkillPolicy
      */
     public function update(User $user, Skill $skill): bool
     {
-        return $skill->id == $user->id;
+       
+        return $skill->user_id == $user->id;
     }
 
     /**

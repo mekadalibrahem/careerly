@@ -23,6 +23,6 @@ Route::group([
     ], function () {
         Route::put('/{id}/password/update', [AccountController::class, 'updatePassword'])->name('password.update');
         Route::put('/{id}/update', [AccountController::class, 'updateAccount'])->name('account.update');
-        Route::apiResource('/{id}/skills', SkillController::class);
+        Route::apiResource('/{user}/skills', SkillController::class);
     });
 });
