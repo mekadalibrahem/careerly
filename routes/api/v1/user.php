@@ -25,6 +25,6 @@ Route::group([
         Route::put('/{id}/password/update', [AccountController::class, 'updatePassword'])->name('password.update');
         Route::put('/{id}/update', [AccountController::class, 'updateAccount'])->name('account.update');
         Route::apiResource('/{user}/skills', SkillController::class);
-        Route::apiResource("/{user}/courses" , CourseController::class);
+        Route::apiResource("/{user}/courses", CourseController::class);
     });
 });

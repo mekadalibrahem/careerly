@@ -41,7 +41,8 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return false;
+
+        return $course->isOwnedBy($user);
     }
 
     /**
