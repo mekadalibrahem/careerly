@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\Qaulifications\CourseController;
 use App\Http\Controllers\Api\Qaulifications\EducationController;
 use App\Http\Controllers\Api\Qaulifications\ProjectController;
 use App\Http\Controllers\Api\Qaulifications\SkillController;
-use App\Http\Controllers\Api\QualificationController;
+use App\Http\Controllers\Api\Works\UserApplicantController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,5 +30,6 @@ Route::group([
         Route::apiResource("/{user}/courses", CourseController::class);
         Route::apiResource("/{user}/projects", ProjectController::class);
         Route::apiResource("/{user}/educations", EducationController::class);
+        Route::apiResource("/{user}/applicants", UserApplicantController::class);
     });
 });

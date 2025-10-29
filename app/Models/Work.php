@@ -31,4 +31,8 @@ class Work extends Model
     {
         return $this->hasMany(WorkRequirment::class);
     }
+    public function applicant(): HasMany
+    {
+        return $this->hasMany(Applicant::class);
+    }
 }
