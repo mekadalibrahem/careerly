@@ -6,6 +6,7 @@
 // })->middleware('auth:sanctum');
 
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\Qaulifications\CourseController;
 use App\Http\Controllers\Api\Qaulifications\SkillController;
 use App\Http\Controllers\Api\QualificationController;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +25,6 @@ Route::group([
         Route::put('/{id}/password/update', [AccountController::class, 'updatePassword'])->name('password.update');
         Route::put('/{id}/update', [AccountController::class, 'updateAccount'])->name('account.update');
         Route::apiResource('/{user}/skills', SkillController::class);
+        Route::apiResource("/{user}/courses" , CourseController::class);
     });
 });

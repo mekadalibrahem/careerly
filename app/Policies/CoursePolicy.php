@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Course;
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Auth\Access\Response;
 
 class CoursePolicy
@@ -29,6 +30,9 @@ class CoursePolicy
      */
     public function create(User $user): bool
     {
+        if ($user->role == UserRolesEnums::USER()) {
+            return true;
+        }
         return false;
     }
 
