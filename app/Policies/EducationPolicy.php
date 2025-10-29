@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Education;
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Auth\Access\Response;
 
 class EducationPolicy
@@ -13,7 +14,7 @@ class EducationPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class EducationPolicy
      */
     public function view(User $user, Education $education): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +30,7 @@ class EducationPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role == UserRolesEnums::USER();
     }
 
     /**
@@ -37,7 +38,7 @@ class EducationPolicy
      */
     public function update(User $user, Education $education): bool
     {
-        return false;
+        return $education->isOwnedBy($user);
     }
 
     /**
@@ -45,7 +46,7 @@ class EducationPolicy
      */
     public function delete(User $user, Education $education): bool
     {
-        return false;
+        return $education->isOwnedBy($user);
     }
 
     /**
@@ -53,7 +54,7 @@ class EducationPolicy
      */
     public function restore(User $user, Education $education): bool
     {
-        return false;
+        return $education->isOwnedBy($user);
     }
 
     /**
@@ -61,6 +62,6 @@ class EducationPolicy
      */
     public function forceDelete(User $user, Education $education): bool
     {
-        return false;
+        return $education->isOwnedBy($user);
     }
 }

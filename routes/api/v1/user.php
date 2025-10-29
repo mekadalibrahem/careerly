@@ -7,6 +7,8 @@
 
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\Qaulifications\CourseController;
+use App\Http\Controllers\Api\Qaulifications\EducationController;
+use App\Http\Controllers\Api\Qaulifications\ProjectController;
 use App\Http\Controllers\Api\Qaulifications\SkillController;
 use App\Http\Controllers\Api\QualificationController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +28,7 @@ Route::group([
         Route::put('/{id}/update', [AccountController::class, 'updateAccount'])->name('account.update');
         Route::apiResource('/{user}/skills', SkillController::class);
         Route::apiResource("/{user}/courses", CourseController::class);
+        Route::apiResource("/{user}/projects", ProjectController::class);
+        Route::apiResource("/{user}/educations", EducationController::class);
     });
 });
