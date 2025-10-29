@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ class Education extends Model
 {
     /** @use HasFactory<\Database\Factories\EducationFactory> */
     use HasFactory;
+    use Ownable;
     protected $fillable = [
         "id",
         "name",

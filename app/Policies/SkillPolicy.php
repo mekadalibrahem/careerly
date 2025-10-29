@@ -42,8 +42,8 @@ class SkillPolicy
      */
     public function update(User $user, Skill $skill): bool
     {
-       
-        return $skill->user_id == $user->id;
+
+        return $skill->isOwnedBy($user);
     }
 
     /**
@@ -51,7 +51,7 @@ class SkillPolicy
      */
     public function delete(User $user, Skill $skill): bool
     {
-        return $skill->id == $user->id;
+        return $skill->isOwnedBy($user);
     }
 
     /**
@@ -59,7 +59,7 @@ class SkillPolicy
      */
     public function restore(User $user, Skill $skill): bool
     {
-        return $skill->id == $user->id;
+        return $skill->isOwnedBy($user);
     }
 
     /**
@@ -67,6 +67,6 @@ class SkillPolicy
      */
     public function forceDelete(User $user, Skill $skill): bool
     {
-        return $skill->id == $user->id;
+        return $skill->isOwnedBy($user);
     }
 }
