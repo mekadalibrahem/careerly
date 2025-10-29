@@ -6,6 +6,7 @@ use App\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Work extends Model
 {
@@ -25,5 +26,9 @@ class Work extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function workRequirments(): HasMany
+    {
+        return $this->hasMany(WorkRequirment::class);
     }
 }
