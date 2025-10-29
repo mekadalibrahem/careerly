@@ -18,9 +18,21 @@ class SkillController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        try {
+            $skills = Skill::where('user_id', $user->id)->get();
+            if ($skills) {
+
+
+                return $this->respondWithSuccess([
+                    "skills" => $skills,
+                ]);
+            }
+            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+        } catch (\Throwable $th) {
+            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+        }
     }
 
     /**
@@ -52,9 +64,20 @@ class SkillController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Skill $skill)
+    public function show(User $user, Skill $skill)
     {
-        //
+        try {
+            if ($skill) {
+
+
+                return $this->respondWithSuccess([
+                    "skill" => $skill,
+                ]);
+            }
+            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+        } catch (\Throwable $th) {
+            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+        }
     }
 
     /**
