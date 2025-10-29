@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('institution');
             $table->string('degree');
             $table->string('grade');
-            $table->timestamp('start_at');
-            $table->timestamp('end_at');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
