@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->id();
             $table->decimal('ai_rate')->nullable();
+            $table->boolean('accepted')->default(false)->nullable();
             $table->foreignId('work_id')->constrained('works');
             $table->foreignId('user_id')->constrained('users');
+            $table->unique(['work_id', 'user_id']);
             $table->timestamps();
         });
     }
