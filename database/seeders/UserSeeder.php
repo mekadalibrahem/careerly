@@ -17,20 +17,20 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'admin user',
             'email' => 'admin@example.com',
-            'role' => UserRolesEnums::admin(),
+            'role' => UserRolesEnums::ADMIN,
             'title' => "site admin"
         ]);
         User::factory()->create([
             'name' => 'hr user',
             'email' => 'hr@example.com',
-            'role' => UserRolesEnums::hr(),
+            'role' => UserRolesEnums::HR,
             'title' => "HR"
         ]);
         User::factory()->create([
             'name' => 'ahmad sami',
             'email' => 'user01@example.com',
-            'role' => UserRolesEnums::user(),
-            'title' => "Backend Developer"
+            'role' => UserRolesEnums::USER,
+            'title' => "Data Scientist"
         ]);
     }
 }

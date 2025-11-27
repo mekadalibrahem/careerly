@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'start');
 
 Route::get("/test",  function () {
-    $user = User::first();
-    $work = Work::first();
-    $user->notify(new AcceptOnWork($work->id, $work->name));
+    $user = User::where('id', 3)->with(['skills', 'projects', 'courses', 'educations'])->first();
+    return $user;
 });

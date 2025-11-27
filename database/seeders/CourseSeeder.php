@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,12 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Course::create([
+            "user_id" => 3,
+            "name" =>  "Machine Learning",
+            "provider" =>  "Coursera",
+            "duration" => "3 mounth",
+            "url" => "https://url-link",
+        ]);
     }
 }
