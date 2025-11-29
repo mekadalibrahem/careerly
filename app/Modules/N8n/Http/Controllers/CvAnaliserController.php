@@ -2,6 +2,7 @@
 
 namespace App\Modules\N8n\Http\Controllers;
 
+use App\Events\CvAnalyzeProcessed;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
 use App\Modules\N8n\WorkflowManager;
@@ -17,7 +18,7 @@ class CvAnaliserController extends ApiController
         try {
 
             $user_id = Auth::user()->id;
-           
+
             $manager->run('analyze_cv', AnalyzeCvWorkflow::preperPayload($user_id));
             return $this->respondOk("Your request sent");
         } catch (\Throwable $th) {
@@ -44,7 +45,7 @@ class CvAnaliserController extends ApiController
         ]);
 
         // Fire your event for notifications
-        // event(new CvAnalysisCompleted($userId));
+        event(new CvAnalyzeProcessed($user_id));
 
         return response()->json(['status' => 'received']);
     }
