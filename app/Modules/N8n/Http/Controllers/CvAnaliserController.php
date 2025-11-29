@@ -2,19 +2,27 @@
 
 namespace App\Modules\N8n\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
 use App\Modules\N8n\WorkflowManager;
 use App\Modules\N8n\Workflows\AnalyzeCvWorkflow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CvAnaliserController extends Controller
+class CvAnaliserController extends ApiController
 {
+
     public function analyzeCV(Request $request, WorkflowManager $manager)
     {
-        $user_id = 3;
-        // return AnalyzeCvWorkflow::preperPayload($user_id);
-        return $manager->run('analyze_cv', AnalyzeCvWorkflow::preperPayload($user_id));
+        try {
+
+            $user_id = Auth::user()->id;
+           
+            $manager->run('analyze_cv', AnalyzeCvWorkflow::preperPayload($user_id));
+            return $this->respondOk("Your request sent");
+        } catch (\Throwable $th) {
+            return $this->respondError("ERROR TO SENT REQUEST: $th->getMesaage()");
+        }
     }
     public function store(Request $request)
     {
