@@ -20,17 +20,5 @@ class UserSeeder extends Seeder
             'role' => UserRolesEnums::ADMIN,
             'title' => "site admin"
         ]);
-        User::factory()->create([
-            'name' => 'hr user',
-            'email' => 'hr@example.com',
-            'role' => UserRolesEnums::HR,
-            'title' => "HR"
-        ]);
-        User::factory()->create([
-            'name' => 'ahmad sami',
-            'email' => 'user01@example.com',
-            'role' => UserRolesEnums::USER,
-            'title' => "Data Scientist"
-        ]);
     }
 }

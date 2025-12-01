@@ -3,6 +3,7 @@
 namespace App\Modules\N8n;
 
 use App\Modules\N8n\Workflows\AnalyzeCvWorkflow;
+use App\Modules\N8n\Workflows\RateApplicantWorkflow;
 
 class WorkflowManager
 {
@@ -10,10 +11,12 @@ class WorkflowManager
 
     public function __construct(
         AnalyzeCvWorkflow $cv,
+        RateApplicantWorkflow $rateApplicant,
 
     ) {
         $this->workflows = [
             'analyze_cv' => $cv,
+            "rateApplicants" => $rateApplicant,
         ];
     }
 
