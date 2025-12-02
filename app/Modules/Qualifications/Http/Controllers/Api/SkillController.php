@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Qaulifications;
+namespace App\Modules\Qualifications\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Qaulifications\StoreSkillRequest;
-use App\Http\Requests\Qaulifications\UpdateSkillRequest;
-
-use App\Models\Skill;
 use App\Models\User;
-use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Qualifications\Entities\Models\Skill;
+use App\Modules\Qualifications\Http\Requests\StoreSkillRequest;
+use App\Modules\Qualifications\Http\Requests\UpdateSkillRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 

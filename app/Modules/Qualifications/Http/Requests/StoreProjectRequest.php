@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Qaulifications;
+namespace App\Modules\Qualifications\Http\Requests;
 
+use App\Modules\Qualifications\Entities\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateEducationRequest extends FormRequest
+class StoreProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,12 +14,7 @@ class UpdateEducationRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        $education = $this->route('education');
-        if (!$user || !$education) {
-            return false;
-        }
-
-        return $user->can("update", $education);
+        return $user->can("create", Project::class);
     }
 
     /**
@@ -30,11 +26,9 @@ class UpdateEducationRequest extends FormRequest
     {
         return [
             "name" => 'required|string|max:255',
-            "institution" => 'required|string|max:255',
-            "degree" => 'required|string|max:255',
-             "grade" => 'required|numeric|min:50.00|max:100|decimal:1,3',
-            "start_at" => 'required|date',
-            "end_at" => 'nullable|date',
+            "description" => 'required|string',
+            "tools" => 'required|string',
+            "url" => 'nullable|url',
         ];
     }
 }

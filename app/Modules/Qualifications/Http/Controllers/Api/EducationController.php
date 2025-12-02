@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\Qaulifications;
+namespace App\Modules\Qualifications\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Qaulifications\StoreEducationRequest;
-use App\Http\Requests\Qaulifications\UpdateEducationRequest;
-use App\Models\Education;
+
 use App\Models\User;
+use App\Modules\Qualifications\Entities\Models\Education;
+use App\Modules\Qualifications\Http\Requests\StoreEducationRequest;
+use App\Modules\Qualifications\Http\Requests\UpdateEducationRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 

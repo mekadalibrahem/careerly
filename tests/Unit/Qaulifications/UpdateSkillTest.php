@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Qaulifications;
 
-use App\Models\Skill;
 use App\Models\User;
+use App\Modules\Qualifications\Entities\Models\Skill;
 use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

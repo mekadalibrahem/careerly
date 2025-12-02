@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Work;
+use App\Modules\Qualifications\Entities\Models\Skill;
 use App\Notifications\AcceptOnWork;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'start');
 
 Route::get("/test",  function () {
-    $user = User::where('id', 3)->with(['skills', 'projects', 'courses', 'educations'])->first();
-    return $user;
+    $user = User::where('id', 3)->withQualifications()->first();
+    // $user = Skill::first();
+    dd($user);
 });

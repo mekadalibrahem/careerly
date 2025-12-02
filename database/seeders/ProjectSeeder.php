@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Project;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Modules\Qualifications\Entities\Models\Project;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder

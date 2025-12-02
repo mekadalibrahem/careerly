@@ -6,11 +6,12 @@
 // })->middleware('auth:sanctum');
 
 use App\Http\Controllers\Api\AccountController;
-use App\Http\Controllers\Api\Qaulifications\CourseController;
-use App\Http\Controllers\Api\Qaulifications\EducationController;
-use App\Http\Controllers\Api\Qaulifications\ProjectController;
-use App\Http\Controllers\Api\Qaulifications\SkillController;
+
 use App\Http\Controllers\Api\Works\UserApplicantController;
+use App\Modules\Qualifications\Http\Controllers\Api\CourseController;
+use App\Modules\Qualifications\Http\Controllers\Api\EducationController;
+use App\Modules\Qualifications\Http\Controllers\Api\ProjectController;
+use App\Modules\Qualifications\Http\Controllers\Api\SkillController;
 use Illuminate\Support\Facades\Route;
 
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Qaulifications;
+namespace App\Modules\Qualifications\Http\Requests;
 
-use App\Models\Skill;
+use App\Modules\Qualifications\Entities\Models\Skill;
 use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Modules\Qualifications\Traits\Entities\HasQualifications;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,6 +16,7 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use HasApiTokens;
+    use HasQualifications;
 
     /**
      * The attributes that are mass assignable.
@@ -50,37 +53,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    /**
-     * Get the projects for the qualification.
-     */
-    public function projects()
-    {
-        return $this->hasMany(Project::class);
-    }
 
-    /**
-     * Get the courses for the qualification.
-     */
-    public function courses()
-    {
-        return $this->hasMany(Course::class);
-    }
-
-    /**
-     * Get the skills for the qualification.
-     */
-    public function skills()
-    {
-        return $this->hasMany(Skill::class);
-    }
-
-    /**
-     * Get the educations for the qualification.
-     */
-    public function educations()
-    {
-        return $this->hasMany(Education::class);
-    }
 
     public function jobs(): HasMany
     {

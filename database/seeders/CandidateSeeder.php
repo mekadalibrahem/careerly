@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Skill;
-use App\Models\Project;
-use App\Models\Education;
-use App\Models\Course;
+use App\Modules\Qualifications\Entities\Models\Course;
+use App\Modules\Qualifications\Entities\Models\Education;
+use App\Modules\Qualifications\Entities\Models\Project;
+use App\Modules\Qualifications\Entities\Models\Skill;
 use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;

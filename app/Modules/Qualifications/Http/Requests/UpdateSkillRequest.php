@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Qaulifications;
+namespace App\Modules\Qualifications\Http\Requests;
 
-use App\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateCourseRequest extends FormRequest
+class UpdateSkillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,12 +13,12 @@ class UpdateCourseRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        $course = $this->route('course');
-        if (!$user || !$course) {
+        $skill = $this->route('skill');
+        if (!$user || !$skill) {
             return false;
         }
 
-        return $user->can("update", $course);
+        return $user->can('update', $skill);
     }
 
     /**
@@ -31,9 +30,6 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             "name" => 'required|string|max:255',
-            "provider" => 'required|string|max:255',
-            "duration" => 'required|string|max:255',
-            "url" => 'nullable|url|max:255',
         ];
     }
 }

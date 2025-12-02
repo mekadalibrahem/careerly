@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\Qaulifications;
+namespace App\Modules\Qualifications\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Qaulifications\StoreCourseRequest;
-use App\Http\Requests\Qaulifications\UpdateCourseRequest;
-use App\Models\Course;
+
 use App\Models\User;
+use App\Modules\Qualifications\Entities\Models\Project;
+use App\Modules\Qualifications\Http\Requests\StoreProjectRequest;
+use App\Modules\Qualifications\Http\Requests\UpdateProjectRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class CourseController extends ApiController
+class ProjectController extends ApiController
 {
 
     /**
@@ -19,12 +21,12 @@ class CourseController extends ApiController
     public function index(User $user)
     {
         try {
-            $courses = Course::where('user_id', $user->id)->get();
-            if ($courses) {
+            $projects = Project::where('user_id', $user->id)->get();
+            if ($projects) {
 
 
                 return $this->respondWithSuccess([
-                    "courses" => $courses,
+                    "projects" => $projects,
                 ]);
             }
             $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
@@ -37,14 +39,14 @@ class CourseController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(User $user, Course $course)
+    public function show(User $user, Project $project)
     {
         try {
-            if ($course) {
+            if ($project) {
 
 
                 return $this->respondWithSuccess([
-                    "course" => $course,
+                    "project" => $project,
                 ]);
             }
             $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
@@ -56,23 +58,23 @@ class CourseController extends ApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCourseRequest $request)
+    public function store(StoreProjectRequest $request)
     {
 
         $validation = $request->validated();
         try {
             $user =  Auth::user();
 
-            $course = Course::create([
+            $project = Project::create([
                 'name' => $validation['name'],
-                'provider' => $validation['provider'],
-                'duration' => $validation['duration'],
+                'description' => $validation['description'],
+                'tools' => $validation['tools'],
                 'url' => $validation['url'],
                 'user_id' => $user->id
             ]);
-            if ($course) {
+            if ($project) {
                 return $this->respondCreated([
-                    "course" => $course
+                    "project" => $project
                 ]);
             } else {
                 return $this->respondError("ERROR TO STORE");
@@ -84,36 +86,36 @@ class CourseController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCourseRequest $request, User $user, Course $course)
+    public function update(UpdateProjectRequest $request, User $user, Project $project)
     {
 
         $validation = $request->validated();
         try {
-            $course->name     = $validation['name'];
-            $course->provider = $validation['provider'];
-            $course->duration = $validation['duration'];
-            $course->url      = $validation['url'];
-            if ($course->save()) {
+            $project->name     = $validation['name'];
+            $project->description = $validation['description'];
+            $project->tools     = $validation['tools'];
+            $project->url      = $validation['url'];
+            if ($project->save()) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",
-                    "course" => $course
+                    "project" => $project
                 ]);
             } else {
-                return $this->respondError("ERROR UPDATE course ");
+                return $this->respondError("ERROR UPDATE project ");
             }
         } catch (\Throwable $th) {
-            return $this->respondError("ERROR UPDATE course " . $th->getMessage());
+            return $this->respondError("ERROR UPDATE project " . $th->getMessage());
         }
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user, Course $course)
+    public function destroy(User $user, Project $project)
     {
         try {
-            if ($course) {
+            if ($project) {
 
-                $course->delete();
+                $project->delete();
                 return $this->respondOk("Item deleted");
             }
             $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
