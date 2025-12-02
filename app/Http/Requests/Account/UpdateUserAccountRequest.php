@@ -39,6 +39,8 @@ class UpdateUserAccountRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $this->route('id'),
             'title' => 'required|string',
+            "bio" => "nullable|string|max:2500",
+            "phone" => "nullable|string|max:15"
         ];
     }
 }

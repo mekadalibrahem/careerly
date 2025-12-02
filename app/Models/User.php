@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Modules\Qualifications\Traits\Entities\HasQualifications;
+use App\Modules\Works\Entities\Models\Applicant;
+use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +31,9 @@ class User extends Authenticatable
         'role',
         'title',
         'password',
+        "ban_at",
+        "phone",
+        "bio"
     ];
 
     /**
@@ -39,6 +44,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+        'two_factor_confirmed_at'
     ];
 
     /**
@@ -49,6 +57,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            "ban_at" => 'datetime',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

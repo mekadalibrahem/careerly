@@ -29,6 +29,8 @@ class CreateUserRequest extends FormRequest
             'role' => ['required', 'string', Rule::enum(UserRolesEnums::class)->except([UserRolesEnums::ADMIN])],
             'title' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
+            "bio" => "nullable|string|max:2500",
+            "phone" => "nullable|string|max:15"
         ];
     }
 }
