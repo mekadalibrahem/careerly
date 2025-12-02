@@ -1,13 +1,12 @@
 <?php
 
+namespace App\Modules\Works\Http\Requests;
 
-namespace App\Http\Requests\Work;
-
-use App\Models\Applicant;
+use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreUserApplicantRequest extends FormRequest
+class StoreWorkRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,7 @@ class StoreUserApplicantRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        return $user->can("create", Applicant::class);
+        return $user->can("create", Work::class);
     }
 
     /**
@@ -26,7 +25,8 @@ class StoreUserApplicantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "work_id" => 'required|exists:works,id',
+            "name" => 'required|string|max:255',
+            "description" => 'required|string'
         ];
     }
 }

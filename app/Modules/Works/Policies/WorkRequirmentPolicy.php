@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Works\Policies;
+
 
 use App\Models\User;
-use App\Models\Work;
-use App\Models\WorkRequirment;
+use App\Modules\Works\Entities\Models\Work;
+use App\Modules\Works\Entities\Models\WorkRequirment;
 use Illuminate\Auth\Access\Response;
 
 class WorkRequirmentPolicy

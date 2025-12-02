@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Modules\Works\Entities\Models;
 
 use App\Models\Traits\Ownable;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

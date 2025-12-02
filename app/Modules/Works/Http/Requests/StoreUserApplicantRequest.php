@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Http\Requests\Work;
+namespace App\Modules\Works\Http\Requests;
 
-use App\Models\Applicant;
+use App\Modules\Works\Entities\Models\Applicant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateUserApplicantRequest extends FormRequest
+class StoreUserApplicantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

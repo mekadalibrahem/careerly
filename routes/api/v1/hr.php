@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\Works\WorkApplicantController;
-use App\Http\Controllers\Api\Works\WorkController;
-use App\Http\Controllers\Api\Works\WorkRequirmentController;
+use App\Modules\Works\Http\Controllers\Api\WorkApplicantController;
+use App\Modules\Works\Http\Controllers\Api\WorkController;
+use App\Modules\Works\Http\Controllers\Api\WorkRequirmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

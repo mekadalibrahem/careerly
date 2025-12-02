@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\RateApplicantProcessed;
 use App\Models\User;
-use App\Models\Work;
+use App\Modules\Works\Entities\Models\Work;
 use App\Notifications\RateApplicantEnd;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

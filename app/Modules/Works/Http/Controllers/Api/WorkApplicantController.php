@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\Works;
+namespace App\Modules\Works\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Models\Applicant;
 use App\Models\User;
-use App\Models\Work;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Works\Entities\Models\Applicant;
+use App\Modules\Works\Entities\Models\Work;
 use App\Modules\Works\Enums\WorkStatusEnum;
-use App\Modules\Works\Services\WorkService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

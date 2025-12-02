@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Works;
+namespace App\Modules\Works\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Work\StoreWorkRequest;
-use App\Http\Requests\Work\UpdateWorkRequest;
-use App\Models\Work;
+use App\Modules\Works\Entities\Models\Work;
 use App\Modules\Works\Enums\WorkStatusEnum;
+use App\Modules\Works\Http\Requests\StoreWorkRequest;
+use App\Modules\Works\Http\Requests\UpdateWorkRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +20,8 @@ class WorkController extends ApiController
     public function index()
     {
         try {
-            $user = Auth::user();
-            $works = Work::where('user_id', $user->id)->get();
+            
+            $works = Work::all();
             if ($works) {
 
 
@@ -84,7 +85,7 @@ class WorkController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateworkRequest $request, Work $work)
+    public function update(UpdateWorkRequest $request, Work $work)
     {
 
         $validation = $request->validated();

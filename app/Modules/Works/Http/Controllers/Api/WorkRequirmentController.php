@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Works;
+namespace App\Modules\Works\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Work\StoreWorkRequest;
-use App\Http\Requests\Work\StoreWorkRequirmentRequest;
-use App\Http\Requests\Work\UpdateWorkRequest;
-use App\Http\Requests\Work\UpdateWorkRequirmentRequest;
-use App\Models\Work;
-use App\Models\WorkRequirment;
+use App\Modules\Works\Entities\Models\Work;
+use App\Modules\Works\Entities\Models\WorkRequirment;
+use App\Modules\Works\Http\Requests\StoreWorkRequirmentRequest;
+use App\Modules\Works\Http\Requests\UpdateWorkRequirmentRequest;
 use Exception;
 
 

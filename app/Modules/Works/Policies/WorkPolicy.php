@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Works\Policies;
 
-use App\Models\Work;
+
+
 use App\Models\User;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Auth\Access\Response;
 
 class WorkPolicy

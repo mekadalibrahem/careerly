@@ -7,11 +7,12 @@
 
 use App\Http\Controllers\Api\AccountController;
 
-use App\Http\Controllers\Api\Works\UserApplicantController;
+
 use App\Modules\Qualifications\Http\Controllers\Api\CourseController;
 use App\Modules\Qualifications\Http\Controllers\Api\EducationController;
 use App\Modules\Qualifications\Http\Controllers\Api\ProjectController;
 use App\Modules\Qualifications\Http\Controllers\Api\SkillController;
+use App\Modules\Works\Http\Controllers\Api\UserApplicantController;
 use Illuminate\Support\Facades\Route;
 
 

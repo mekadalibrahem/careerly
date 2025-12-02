@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Work;
+namespace App\Modules\Works\Http\Requests;
 
+use App\Modules\Works\Entities\Models\WorkRequirment;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateWorkRequest extends FormRequest
+class StoreWorkRequirmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,11 +15,7 @@ class UpdateWorkRequest extends FormRequest
     {
         $user = Auth::user();
         $work = $this->route('work');
-        if (!$user || !$work) {
-            return false;
-        }
-
-        return $user->can("update", $work);
+        return $user->can("create", $work, WorkRequirment::class);
     }
 
     /**
@@ -30,7 +27,8 @@ class UpdateWorkRequest extends FormRequest
     {
         return [
             "name" => 'required|string|max:255',
-            "description" => 'required|string'
+            "description" => 'required|string',
+            "level" => "required|string|max:255",
         ];
     }
 }

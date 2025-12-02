@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Works\Policies;
 
-use App\Models\Applicant;
 use App\Models\User;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Works\Entities\Models\Applicant;
 use Illuminate\Auth\Access\Response;
 
 class ApplicantPolicy

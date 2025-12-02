@@ -3,12 +3,13 @@
 namespace App\Jobs;
 
 use App\Events\RateApplicantProcessed;
-use App\Models\Work;
+
 use App\Modules\N8n\Entities\WorkflowCall;
 
 use App\Modules\N8n\WorkflowManager;
 use App\Modules\N8n\Workflows\RateApplicantWorkflow;
 use App\Modules\Qualifications\QualificationsHelper;
+use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Str;

@@ -2,7 +2,6 @@
 
 use App\Modules\N8n\Http\Controllers\CvAnaliserController;
 use App\Modules\N8n\Http\Controllers\RateApplicantController;
-use App\Modules\N8n\Http\Controllers\WorkFlowController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

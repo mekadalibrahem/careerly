@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Works;
+namespace App\Modules\Works\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Work\StoreUserApplicantRequest;
-use App\Http\Requests\Work\UpdateUserApplicantRequest;
-use App\Models\Applicant;
+
 use App\Models\User;
+use App\Modules\Works\Entities\Models\Applicant;
+use App\Modules\Works\Http\Requests\StoreUserApplicantRequest;
+use App\Modules\Works\Http\Requests\UpdateUserApplicantRequest;
 use Illuminate\Support\Facades\Auth;
 
 class UserApplicantController extends ApiController
