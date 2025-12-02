@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Qualifications\Policies;
 
-use App\Models\Project;
 use App\Models\User;
+use App\Modules\Qualifications\Entities\Models\Course;
 use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Auth\Access\Response;
 
-class ProjectPolicy
+class CoursePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -20,7 +20,7 @@ class ProjectPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Project $project): bool
+    public function view(User $user, Course $course): bool
     {
         return true;
     }
@@ -30,38 +30,42 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRolesEnums::USER();
+        if ($user->role == UserRolesEnums::USER()) {
+            return true;
+        }
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Project $project): bool
+    public function update(User $user, Course $course): bool
     {
-        return $project->isOwnedBy($user);
+
+        return $course->isOwnedBy($user);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Project $project): bool
+    public function delete(User $user, Course $course): bool
     {
-        return $project->isOwnedBy($user);
+        return $course->isOwnedBy($user);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Project $project): bool
+    public function restore(User $user, Course $course): bool
     {
-        return $project->isOwnedBy($user);
+        return $course->isOwnedBy($user);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Project $project): bool
+    public function forceDelete(User $user, Course $course): bool
     {
-        return $project->isOwnedBy($user);
+        return $course->isOwnedBy($user);
     }
 }

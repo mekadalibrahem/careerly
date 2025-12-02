@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Qualifications\Policies;
 
-use App\Models\Skill;
+
 use App\Models\User;
+use App\Modules\Qualifications\Entities\Models\Skill;
 use App\Modules\Users\Enums\UserRolesEnums;
-use Illuminate\Auth\Access\Response;
-
 class SkillPolicy
 {
     /**
