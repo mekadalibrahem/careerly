@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Work;
+
 use App\Models\User;
-use App\Models\Applicant;
+
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Works\Entities\Models\Applicant;
+use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Database\Seeder;
 
 class ApplicantSeeder extends Seeder

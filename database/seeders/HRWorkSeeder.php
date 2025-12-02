@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Work;
-use App\Models\WorkRequirment;
+
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Modules\Works\Entities\Models\Work;
+use App\Modules\Works\Entities\Models\WorkRequirment;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
