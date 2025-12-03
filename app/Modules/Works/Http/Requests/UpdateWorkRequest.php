@@ -2,9 +2,11 @@
 
 namespace App\Modules\Works\Http\Requests;
 
-
+use App\Modules\Works\Enums\WorkStatusEnum;
+use App\Modules\Works\Enums\WorkTypesEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateWorkRequest extends FormRequest
 {
@@ -31,7 +33,14 @@ class UpdateWorkRequest extends FormRequest
     {
         return [
             "name" => 'required|string|max:255',
-            "description" => 'required|string'
+            "description" => 'required|string',
+            "company" => "required|string|max:255",
+            "location" => "required|string|max:255",
+            'salary_range' => "required|string|max:255",
+            'requirements' => "required|string|max:2000",
+            'benefits' => "required|string|max:2000",
+            'type' => ["required", "string", Rule::enum(WorkTypesEnum::class)],
+            "status" =>  ["nullable", "string", Rule::enum(WorkStatusEnum::class)],
         ];
     }
 }

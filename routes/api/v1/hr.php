@@ -3,16 +3,22 @@
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantController;
 use App\Modules\Works\Http\Controllers\Api\WorkController;
 use App\Modules\Works\Http\Controllers\Api\WorkRequirmentController;
+use App\Modules\Works\Http\Controllers\Api\WorkStatusController;
+use App\Modules\Works\Http\Controllers\Api\WorkTypesController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     "prefix" => "v1",
     "middleware" => [],
 ], function () {
+    Route::get("works/types", [WorkTypesController::class, 'index'])->name("works.types");
     Route::group([
         'middleware' => ['auth:sanctum']
     ], function () {
+        Route::put("works/{work}/activate", [WorkStatusController::class, 'activate'])->name("works.activate");
+        Route::put("works/{work}/close", [WorkStatusController::class, 'close'])->name("works.close");
         Route::apiResource("works", WorkController::class);
+
         Route::apiResource("works/{work}/workRequirments", WorkRequirmentController::class);
         Route::get("works/{work}/applicants/{applicant}", [WorkApplicantController::class, 'show'])->name('works.applicants.show');
         Route::get("works/{work}/applicants", [WorkApplicantController::class, 'index'])->name('works.applicants.index');

@@ -12,6 +12,6 @@ enum WorkStatusEnum: string
     use Values;
     use InvokableCases;
 
-    case END = "end";
-    case RUNNING = "running";
+    case ACTIVE = "active";
+    case CLOSED = "closed";
 }

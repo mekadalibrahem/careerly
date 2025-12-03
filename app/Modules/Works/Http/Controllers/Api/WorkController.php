@@ -4,8 +4,8 @@ namespace App\Modules\Works\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Api\ApiController;
+use App\Modules\Works\Entities\DTOs\WorkRegistrationDTO;
 use App\Modules\Works\Entities\Models\Work;
-use App\Modules\Works\Enums\WorkStatusEnum;
 use App\Modules\Works\Http\Requests\StoreWorkRequest;
 use App\Modules\Works\Http\Requests\UpdateWorkRequest;
 use Exception;
@@ -20,7 +20,7 @@ class WorkController extends ApiController
     public function index()
     {
         try {
-            
+
             $works = Work::all();
             if ($works) {
 
@@ -64,13 +64,10 @@ class WorkController extends ApiController
         $validation = $request->validated();
         try {
             $user =  Auth::user();
-
-            $work = Work::create([
-                'name' => $validation['name'],
-                'description' => $validation['description'],
-                'status' => WorkstatusEnum::RUNNING(),
-                'user_id' => $user->id
-            ]);
+            $workDto = WorkRegistrationDTO::fromArray($validation);
+            $data = $workDto->toArray();
+            $data['user_id'] = $user->id;
+            $work = Work::create($data);
             if ($work) {
                 return $this->respondCreated([
                     "work" => $work
@@ -90,9 +87,9 @@ class WorkController extends ApiController
 
         $validation = $request->validated();
         try {
-            $work->name     = $validation['name'];
-            $work->description = $validation['description'];
-            if ($work->save()) {
+            $workDto = WorkRegistrationDTO::fromArray($validation);
+            $update = $work->update($workDto->toArray());
+            if ($update) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",
                     "work" => $work

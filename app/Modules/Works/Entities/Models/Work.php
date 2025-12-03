@@ -19,10 +19,15 @@ class Work extends Model
     protected $fillable = [
         "name",
         "description",
+        "company",
+        "location",
+        "type",
+        "salary_range",
+        'requirements',
+        'benefits',
         "status",
         "user_id",
-        "created_at",
-        "updated_at",
+
     ];
 
     public function user(): BelongsTo
