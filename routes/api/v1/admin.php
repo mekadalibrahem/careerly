@@ -1,9 +1,8 @@
 <?php
 
+use App\Modules\Admin\Http\Controllers\Api\StatsController;
 use App\Modules\Admin\Http\Controllers\Api\UserController;
 use App\Modules\Admin\Http\Middleware\HasAdminRoleMiddleware;
-use App\Modules\N8n\Http\Controllers\CvAnaliserController;
-use App\Modules\N8n\Http\Controllers\RateApplicantController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -27,6 +26,12 @@ Route::group([
                 Route::post("/{user}/ban", [UserController::class, 'ban'])->name("ban");
                 Route::post("/{user}/unban", [UserController::class, 'unban'])->name("unban");
                 Route::post("/{user}/role", [UserController::class, 'role'])->name("role");
+            });
+            Route::group([
+                'prefix' => "stats",
+                "as" => "stats."
+            ], function () {
+                Route::get("", [StatsController::class, 'index'])->name("index");
             });
         });
     });
