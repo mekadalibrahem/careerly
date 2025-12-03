@@ -9,3 +9,4 @@ require __DIR__ . "/auth.php";
 require __DIR__ . "/user.php";
 require __DIR__ . "/hr.php";
 require __DIR__ . "/ai.php";
+require __DIR__ . "/admin.php";

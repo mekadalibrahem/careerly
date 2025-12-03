@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json('ai')->nullable();
             $table->rememberToken();
             $table->timestamp("ban_at")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

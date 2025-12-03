@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Modules\Users\Enums\UserRolesEnums;
 use Illuminate\Auth\Access\Response;
 
 class UserPolicy
@@ -36,7 +37,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($user->id == $model->id) {
+        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN() ) {
             return true;
         }
         return false;
@@ -47,7 +48,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        if ($user->id == $model->id) {
+        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN()) {
             return true;
         }
         return false;
@@ -58,7 +59,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        if ($user->id == $model->id) {
+        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN() ) {
             return true;
         }
         return false;

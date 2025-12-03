@@ -30,7 +30,7 @@ class ApplicantPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRolesEnums::USER();
+        return $user->role == UserRolesEnums::JOBSEEKER();
     }
 
     /**

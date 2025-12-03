@@ -32,7 +32,7 @@ class WorkPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->role == UserRolesEnums::HR()) {
+        if ($user->role == UserRolesEnums::RECRUITER()) {
             return true;
         }
         return false;

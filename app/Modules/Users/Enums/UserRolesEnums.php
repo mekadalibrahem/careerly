@@ -14,5 +14,6 @@ enum UserRolesEnums: string
 
     case ADMIN = 'admin';
     case USER = 'user';
-    case HR = 'hr';
+    case RECRUITER = 'recruiter';
+    case JOBSEEKER = "job_seeker";
 }

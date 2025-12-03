@@ -22,11 +22,11 @@
 
 ## Phase 3: Admin Endpoints
 
-- Implement GET /admin/users
-- Implement POST /admin/users/{user_id}/ban
-- Implement POST /admin/users/{user_id}/unban
-- Implement DELETE /admin/users/{user_id}
-- Implement POST /admin/users/{user_id}/role
+- Implement GET /admin/users ✅
+- Implement POST /admin/users/{user_id}/ban ✅
+- Implement POST /admin/users/{user_id}/unban ✅
+- Implement DELETE /admin/users/{user_id} ✅
+- Implement POST /admin/users/{user_id}/role ✅
 - Implement GET /admin/stats
 - Implement GET /admin/roles
 

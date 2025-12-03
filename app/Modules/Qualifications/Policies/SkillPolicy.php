@@ -30,7 +30,7 @@ class SkillPolicy
     public function create(User $user): bool
     {
 
-        if ($user->role == UserRolesEnums::USER()) {
+        if ($user->role == UserRolesEnums::JOBSEEKER()) {
             return true;
         }
         return false;

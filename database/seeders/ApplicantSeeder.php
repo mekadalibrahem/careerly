@@ -17,7 +17,7 @@ class ApplicantSeeder extends Seeder
         // Get all Jobs
         $works = Work::all();
         // Get all Candidates
-        $candidates = User::where('role', UserRolesEnums::USER)->get();
+        $candidates = User::where('role', UserRolesEnums::JOBSEEKER())->get();
 
         if ($candidates->count() < 15) {
             $this->command->error("Not enough candidates. Run CandidateSeeder first.");
