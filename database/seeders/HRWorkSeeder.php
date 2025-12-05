@@ -6,7 +6,7 @@ use App\Models\User;
 
 use App\Modules\Users\Enums\UserRolesEnums;
 use App\Modules\Works\Entities\Models\Work;
-use App\Modules\Works\Entities\Models\WorkRequirment;
+use App\Modules\Works\Entities\Models\WorkRequirement;
 use App\Modules\Works\Enums\WorkStatusEnum;
 use App\Modules\Works\Enums\WorkTypesEnum;
 use Illuminate\Database\Seeder;
@@ -110,7 +110,7 @@ class HRWorkSeeder extends Seeder
 
                 // Requirements Table Seeder
                 foreach ($template['reqs'] as $req) {
-                    WorkRequirment::create([
+                    WorkRequirement::create([
                         'work_id' => $work->id,
                         'name' => $req['name'],
                         'description' => $req['desc'],

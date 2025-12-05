@@ -5,7 +5,7 @@ namespace App\Modules\Works\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateWorkRequirmentRequest extends FormRequest
+class UpdateWorkRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,12 +14,12 @@ class UpdateWorkRequirmentRequest extends FormRequest
     {
         $user = Auth::user();
         $work = $this->route('work');
-        $workRequirment = $this->route('workRequirment');
+        $workRequirement = $this->route('workRequirement');
         if (!$user || !$work) {
             return false;
         }
 
-        return $user->can("update", $work, $workRequirment);
+        return $user->can("update", $work, $workRequirement);
     }
 
     /**

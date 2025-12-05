@@ -42,4 +42,4 @@
 - Implement POST /support (support tickets)
 - Implement GET /works?recruiter_id={user_id} (filtering)
 - Implement POST /ai/analyze-applicant (AI analysis)
-- Fix typo: /works/{work_id}/workRequirments → workRequirements
+- Fix typo: /works/{work_id}/workRequirments → workRequirements ✅

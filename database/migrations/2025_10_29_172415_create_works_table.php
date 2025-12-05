@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
-        Schema::create('work_requirments', function (Blueprint $table) {
+        Schema::create('work_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description');

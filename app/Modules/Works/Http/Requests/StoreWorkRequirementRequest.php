@@ -2,11 +2,11 @@
 
 namespace App\Modules\Works\Http\Requests;
 
-use App\Modules\Works\Entities\Models\WorkRequirment;
+use App\Modules\Works\Entities\Models\WorkRequirement;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreWorkRequirmentRequest extends FormRequest
+class StoreWorkRequirementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class StoreWorkRequirmentRequest extends FormRequest
     {
         $user = Auth::user();
         $work = $this->route('work');
-        return $user->can("create", $work, WorkRequirment::class);
+        return $user->can("create", $work, WorkRequirement::class);
     }
 
     /**
