@@ -9,6 +9,7 @@ use App\Modules\Users\Enums\UserRolesEnums;
 use App\Modules\Works\Entities\Models\Applicant;
 use App\Modules\Works\Entities\Models\Work;
 use App\Modules\Works\Enums\WorkStatusEnum;
+use App\Modules\Works\Http\Resources\ApplicantResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,13 +27,11 @@ class WorkApplicantController extends ApiController
             $authedUser = Auth::user();
 
             if ($work->isOwnedBy($authedUser)) {
-                $applicants = $work->applicants;
+                $applicants = Applicant::where("work_id", $work->id)->with("user")->get();
 
                 if ($applicants) {
                     // $applicants = $applicants->count() > 0 ? $applicants : [];
-                    return $this->respondWithSuccess([
-                        "applicants" => $applicants,
-                    ]);
+                    return  ApplicantResource::collection($applicants);
                 }
             } else {
                 return $this->respondUnAuthenticated();
@@ -56,9 +55,7 @@ class WorkApplicantController extends ApiController
                 if ($applicant) {
 
 
-                    return $this->respondWithSuccess([
-                        "applicant" => $applicant,
-                    ]);
+                    return new ApplicantResource($applicant);
                 }
             } else {
                 return $this->respondUnAuthenticated();
