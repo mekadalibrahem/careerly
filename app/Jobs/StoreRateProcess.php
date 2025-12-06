@@ -27,7 +27,7 @@ class StoreRateProcess implements ShouldQueue
      */
     public function handle(): void
     {
-       
+
 
         try {
             $workflow_id = $this->data['workflow_uuid'];
@@ -38,11 +38,11 @@ class StoreRateProcess implements ShouldQueue
             // 1. Get/Validate page
             $repo = new WorkflowCallRepository();
             $page = $repo->getPage($workflow_id, $page_number);
-            
+
             if (!$page) {
                 throw new InvalidArgumentException("PAGE NOT FOUND");
             }
-            
+
             // 2. Prepare values
             $values = collect($results)->map(function ($item) use ($work_id) {
                 return [
@@ -62,7 +62,6 @@ class StoreRateProcess implements ShouldQueue
             if ($repo->isFullyCompleted($workflow_id)) {
                 event(new RateApplicantProcessed($work_id));
             }
-
         } catch (\Throwable $th) {
             Log::error("Store ai rate ERROR", [$th]);
             throw $th;
@@ -82,7 +81,7 @@ class StoreRateProcess implements ShouldQueue
         if ($values->isEmpty()) {
             return;
         }
-        
+
         $ids = $values->pluck('user_id')->toArray();
         $caseStatements = [];
         $bindings = [];
@@ -92,9 +91,9 @@ class StoreRateProcess implements ShouldQueue
         foreach ($values as $item) {
             $caseStatements[] = "WHEN user_id = ? THEN ?";
             $bindings[] = $item['user_id'];
-            $bindings[] = $item['ai_rate'];
+            $bindings[] = (float) $item['ai_rate'];
         }
-        
+
         $caseSql = implode(' ', $caseStatements);
 
         // Construct the full UPDATE query using CASE
@@ -110,12 +109,12 @@ class StoreRateProcess implements ShouldQueue
         // Add updated_at and work_id bindings
         $bindings[] = $updatedAt;
         $bindings[] = $workId;
-        
+
         // Add user_id bindings for the IN clause
         foreach ($ids as $userId) {
             $bindings[] = $userId;
         }
-        
+
         // Execute the single batch update query
         DB::update($sql, $bindings);
     }
