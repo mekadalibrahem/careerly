@@ -81,7 +81,7 @@ class CandidateSeeder extends Seeder
             // 2. Create User
             $user = User::create([
                 'name' => fake()->name(),
-                'email' => "user_{$i}@example.com",
+                'email' => "user_{$i}@gmail.com",
                 'role' => UserRolesEnums::JOBSEEKER(),
                 'title' => $pathData['titles'][array_rand($pathData['titles'])], // Pick a relevant title
                 'password' => $password,
