@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
-class StoreRateProcess implements ShouldQueue
+class StoreRateProcessOld implements ShouldQueue
 {
     use Queueable;
 
@@ -82,30 +82,40 @@ class StoreRateProcess implements ShouldQueue
             return;
         }
 
-        // Group updates by work_id and user_id
-        $cases = [];
-        $ids = [];
+        $ids = $values->pluck('user_id')->toArray();
+        $caseStatements = [];
+        $bindings = [];
+        $updatedAt = now()->toDateTimeString();
 
+        // Build the CASE statement for ai_rate
         foreach ($values as $item) {
-            $cases[$item['user_id']] = (float) $item['ai_rate']; // Cast to float
-            $ids[] = $item['user_id'];
+            $caseStatements[] = "WHEN user_id = ? THEN ?";
+            $bindings[] = $item['user_id'];
+            $bindings[] = (float) $item['ai_rate'];
         }
 
-        // Use Laravel's query builder with CASE
-        DB::table('applicants')
-            ->where('work_id', $workId)
-            ->whereIn('user_id', $ids)
-            ->update([
-                'ai_rate' => DB::raw(
-                    'CASE ' .
-                        collect($cases)
-                        ->map(function ($rate, $userId) {
-                            return "WHEN user_id = {$userId} THEN {$rate}";
-                        })
-                        ->implode(' ') .
-                        ' END'
-                ),
-                'updated_at' => now(),
-            ]);
+        $caseSql = implode(' ', $caseStatements);
+
+        // Construct the full UPDATE query using CASE
+        $sql = "
+            UPDATE applicants
+            SET 
+                ai_rate = (CASE $caseSql END),
+                updated_at = ?
+            WHERE 
+                work_id = ? AND user_id IN (" . implode(',', array_fill(0, count($ids), '?')) . ")
+        ";
+
+        // Add updated_at and work_id bindings
+        $bindings[] = $updatedAt;
+        $bindings[] = $workId;
+
+        // Add user_id bindings for the IN clause
+        foreach ($ids as $userId) {
+            $bindings[] = $userId;
+        }
+
+        // Execute the single batch update query
+        DB::update($sql, $bindings);
     }
 }
