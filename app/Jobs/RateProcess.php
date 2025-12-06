@@ -79,7 +79,7 @@ class RateProcess implements ShouldQueue
                 "id"               => $work->id,
                 "name"             => $work->name,
                 "description"      => $work->description,
-                "work_requirements" => $work->workRequirments->map(fn($req) => [
+                "work_requirements" => $work->workRequirements->map(fn($req) => [
                     "name"  => $req->name,
                     "level" => $req->level,
                     "type"  => $req->type ?? null,   // optional if new approach requires type
