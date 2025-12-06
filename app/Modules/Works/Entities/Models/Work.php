@@ -34,9 +34,9 @@ class Work extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function workRequirments(): HasMany
+    public function workRequirements(): HasMany
     {
-        return $this->hasMany(WorkRequirment::class);
+        return $this->hasMany(WorkRequirement::class);
     }
     public function applicants(): HasMany
     {

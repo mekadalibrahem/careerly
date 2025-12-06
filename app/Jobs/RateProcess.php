@@ -37,7 +37,7 @@ class RateProcess implements ShouldQueue
             /** ---------------------------------------------
              *  STEP 1 — Fetch Work with Relations
              * --------------------------------------------*/
-            $work = Work::with(['workRequirments', 'applicants'])
+            $work = Work::with(['workRequirements', 'applicants'])
                 ->find($this->workId);
 
             if (!$work) {
