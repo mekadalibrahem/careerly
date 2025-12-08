@@ -24,6 +24,7 @@ class WorkController extends ApiController
         try {
 
             $query = Work::query();
+            // filterss
             if ($request->has('recruiter_id') && $request->recruiter_id != null) {
                 $query->where('user_id', $request->recruiter_id);
             }
@@ -33,6 +34,18 @@ class WorkController extends ApiController
             if ($request->has('status') && $request->status != null) {
                 $query->where('status', $request->status);
             }
+            // search 
+            if ($request->has('name') && $request->name != null) {
+                $query->where('name', 'LIKE', '%' . $request->name . '%');
+            }
+            if ($request->has('company') && $request->company != null) {
+                $query->where('company', 'LIKE', '%' . $request->company . '%');
+            }
+            if ($request->has('location') && $request->location != null) {
+                $query->where('location', 'LIKE', '%' . $request->location . '%');
+            }
+
+
 
 
             return WorkResource::collection($query->paginate(15));
