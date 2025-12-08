@@ -8,8 +8,10 @@ use App\Modules\Works\Entities\DTOs\WorkRegistrationDTO;
 use App\Modules\Works\Entities\Models\Work;
 use App\Modules\Works\Http\Requests\StoreWorkRequest;
 use App\Modules\Works\Http\Requests\UpdateWorkRequest;
+use App\Modules\Works\Http\Resources\WorkResource;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class WorkController extends ApiController
 {
@@ -17,21 +19,25 @@ class WorkController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
 
-            $works = Work::all();
-            if ($works) {
-
-
-                return $this->respondWithSuccess([
-                    "works" => $works,
-                ]);
+            $query = Work::query();
+            if ($request->has('recruiter_id') && $request->recruiter_id != null) {
+                $query->where('user_id', $request->recruiter_id);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            if ($request->has('type') &&  $request->type != null) {
+                $query->where('type', $request->type);
+            }
+            if ($request->has('status') && $request->status != null) {
+                $query->where('status', $request->status);
+            }
+
+
+            return WorkResource::collection($query->paginate(15));
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -45,13 +51,11 @@ class WorkController extends ApiController
             if ($work) {
 
 
-                return $this->respondWithSuccess([
-                    "work" => $work,
-                ]);
+                return new WorkResource($work);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            $this->respondNotFound("FAILD ITEM  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            $this->respondError("FAILD : " . $th->getMessage());
         }
     }
 
