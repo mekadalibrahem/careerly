@@ -23,7 +23,7 @@ class WorkController extends ApiController
     {
         try {
 
-            $query = Work::query();
+            $query = Work::query()->with(['user', 'applicants']);
             // filterss
             if ($request->has('recruiter_id') && $request->recruiter_id != null) {
                 $query->where('user_id', $request->recruiter_id);
