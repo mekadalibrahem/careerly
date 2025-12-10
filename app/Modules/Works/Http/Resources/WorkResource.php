@@ -28,6 +28,10 @@ class WorkResource extends JsonResource
             'user_id' => $this->user_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'has_applied' => $this->appliedCount() ? true : false,
+            'applied_count' => $this->appliedCount(),
+            'has_pending' => $this->pendingCount() ? true : false,
+            'pending_count' => $this->pendingCount(),
             'applications_count' => $this->applicants()->count(),
             'recruiter' => [
                 'name' => $this->user->name,

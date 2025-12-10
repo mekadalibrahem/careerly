@@ -34,7 +34,7 @@
 
 - Implement PUT /works/{work_id}/applicants/{applicant_id} (for status updates) ✅
 - Include user details in GET /works/{work_id}/applicants response ✅
-- Add has_applied field to GET /works/{work_id} response (when authenticated)
+- Add has_applied field to GET /works/{work_id} response (when authenticated) ✅
 - Add applications_count to GET /works response (for recruiters) ✅
 
 ## Phase 5: Additional Features
