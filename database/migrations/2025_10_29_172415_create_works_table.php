@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Works\Enums\ApplicantStatusEnum;
 use App\Modules\Works\Enums\WorkStatusEnum;
 use App\Modules\Works\Enums\WorkTypesEnum;
 use Illuminate\Database\Migrations\Migration;
@@ -38,7 +39,7 @@ return new class extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->id();
             $table->decimal('ai_rate')->nullable();
-            $table->boolean('accepted')->default(false)->nullable();
+            $table->enum('status', ApplicantStatusEnum::values())->default(null)->nullable();
             $table->foreignId('work_id')->constrained('works');
             $table->foreignId('user_id')->constrained('users');
             $table->unique(['work_id', 'user_id']);

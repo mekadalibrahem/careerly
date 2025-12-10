@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantController;
+use App\Modules\Works\Http\Controllers\Api\WorkApplicantManagmentController;
 use App\Modules\Works\Http\Controllers\Api\WorkController;
 use App\Modules\Works\Http\Controllers\Api\WorkRequirementController;
 use App\Modules\Works\Http\Controllers\Api\WorkStatusController;
@@ -22,6 +23,9 @@ Route::group([
         Route::apiResource("works/{work}/workRequirements", WorkRequirementController::class);
         Route::get("works/{work}/applicants/{applicant}", [WorkApplicantController::class, 'show'])->name('works.applicants.show');
         Route::get("works/{work}/applicants", [WorkApplicantController::class, 'index'])->name('works.applicants.index');
-        Route::post("works/{work}/selectApplicant", [WorkApplicantController::class, 'selectApplicant'])->name('works.applicants.selectApplicant');
+        // Route::post("works/{work}/selectApplicant", [WorkApplicantController::class, 'selectApplicant'])->name('works.applicants.selectApplicant');
+        Route::put("works/{work}/applicants/{applicant}/reject", [WorkApplicantManagmentController::class, 'reject'])->name('works.applicants.reject');
+        Route::put("works/{work}/applicants/{applicant}/select", [WorkApplicantManagmentController::class, 'select'])->name('works.applicants.select');
+      
     });
 });

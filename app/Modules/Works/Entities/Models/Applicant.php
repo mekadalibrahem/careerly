@@ -15,7 +15,7 @@ class Applicant extends Model
     use Ownable;
     protected $fillable = [
         'ai_rate',
-        "accepted",
+        "status",
         'user_id',
         'work_id',
         'created_at',

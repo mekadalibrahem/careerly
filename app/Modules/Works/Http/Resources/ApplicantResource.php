@@ -18,7 +18,7 @@ class ApplicantResource extends JsonResource
         return [
             "id" => $this->id,
             "ai_rate" => $this->ai_rate,
-            "accepted" => $this->accepted,
+            "status" => $this->status,
             "work_id" => $this->work_id,
             "user_id" => $this->user_id,
             "created_at" => $this->created_at,
