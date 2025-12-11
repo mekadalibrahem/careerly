@@ -45,7 +45,7 @@ class ApplicantSeeder extends Seeder
                         'work_id' => $work->id,
                         'user_id' => $candidate->id,
                         // Requirement: "rate profile from 1,100"
-                        'ai_rate' => rand(10, 99) + (rand(0, 9) / 10), // e.g. 85.4
+                       
                         // 'accepted' => rand(0, 100) > 90, // Only 10% accepted
                     ]);
                 }

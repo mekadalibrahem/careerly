@@ -38,7 +38,6 @@ return new class extends Migration
         });
         Schema::create('applicants', function (Blueprint $table) {
             $table->id();
-            $table->decimal('ai_rate')->nullable();
             $table->enum('status', ApplicantStatusEnum::values())->default(null)->nullable();
             $table->foreignId('work_id')->constrained('works');
             $table->foreignId('user_id')->constrained('users');

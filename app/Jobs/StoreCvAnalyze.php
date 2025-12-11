@@ -2,39 +2,37 @@
 
 namespace App\Jobs;
 
-use App\Events\RateApplicantProcessed;
+use App\Events\CvAnalyzeProcessed;
+use App\Models\User;
 use App\Modules\N8n\Entities\AiAnalyze;
 use App\Modules\N8n\Entities\Repositories\WorkflowCallRepository;
 use App\Modules\N8n\Enums\AiAnalyzeTypeEnum;
-use App\Modules\Works\Entities\Models\Applicant;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
-class StoreRateProcess implements ShouldQueue
+class StoreCvAnalyze implements ShouldQueue
 {
     use Queueable;
 
-    public ?array $data;
-
-    public function __construct(?array $data)
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(public ?array $data)
     {
-        $this->data = $data;
+        //
     }
 
     /**
-     * The main job method, now focused on orchestration.
+     * Execute the job.
      */
     public function handle(): void
     {
-
-
         try {
             $workflow_id = $this->data['workflow_uuid'];
             $page_number = $this->data['page'];
-            $work_id     = $this->data['work_id'];
-            $results     = $this->data['results'];
+            $user_id     = $this->data['user_id'];
+            $result     = $this->data['results'];
 
             // 1. Get/Validate page
             $repo = new WorkflowCallRepository();
@@ -43,32 +41,28 @@ class StoreRateProcess implements ShouldQueue
             if (!$page) {
                 throw new InvalidArgumentException("PAGE NOT FOUND");
             }
-
-            // 2. Prepare values
-            $rows = collect($results)->map(function ($item) use ($work_id) {
-                return [
-                    'data' => json_encode($item),
-                    'type' => AiAnalyzeTypeEnum::APPLICANT(),
-                    'analyze_id'    => Applicant::where(['user_id' => $item['user_id'], 'work_id' => $work_id])->first()->id,
-                    'analyze_type'    => Applicant::class,
-                ];
-            });
             AiAnalyze::upsert(
-                $rows->toArray(),
+                [
+                    'data' => json_encode($result),
+                    'type' => AiAnalyzeTypeEnum::CV(),
+                    "analyze_id" => $user_id,
+                    "analyze_type" =>  User::class,
+                ],
                 ['analyze_id', 'analyze_type', 'type'],
                 ['data']
             );
+
 
             // 4. Mark page completed
             $repo->markCompleted($page->id, $this->data);
 
             // 5. Check if workflow fully completed and dispatch event
             if ($repo->isFullyCompleted($workflow_id)) {
-                event(new RateApplicantProcessed($work_id));
+                event(new CvAnalyzeProcessed($user_id));
             }
         } catch (\Throwable $th) {
-            Log::error("Store ai rate ERROR" . $th->getMessage());
+            logger()->error("Store ai analyze ERROR", [$th]);
+            throw $th;
         }
     }
-
 }

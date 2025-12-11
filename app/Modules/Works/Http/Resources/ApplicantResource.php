@@ -2,6 +2,7 @@
 
 namespace App\Modules\Works\Http\Resources;
 
+use App\Modules\N8n\Enums\AiAnalyzeTypeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,8 +18,8 @@ class ApplicantResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "ai_rate" => $this->ai_rate,
             "status" => $this->status,
+            'ai_rate' => $this->analyze()->where('type', AiAnalyzeTypeEnum::APPLICANT())->orderBy('updated_at', 'desc')->first()?->data ?? null,
             "work_id" => $this->work_id,
             "user_id" => $this->user_id,
             "created_at" => $this->created_at,

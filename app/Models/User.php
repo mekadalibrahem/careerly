@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Modules\N8n\Entities\Traits\HasAnalyzableTraits;
 use App\Modules\Qualifications\Traits\Entities\HasQualifications;
 use App\Modules\Works\Entities\Models\Applicant;
 use App\Modules\Works\Entities\Models\Work;
@@ -21,6 +22,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasQualifications;
     use SoftDeletes;
+    use HasAnalyzableTraits;
     /**
      * The attributes that are mass assignable.
      *

@@ -2,52 +2,54 @@
 
 namespace App\Modules\N8n\Http\Controllers;
 
-use App\Events\CvAnalyzeProcessed;
 use App\Http\Controllers\Api\ApiController;
+use App\Jobs\SendCvAnalyzeRequest;
+use App\Jobs\StoreCvAnalyze;
 use App\Models\User;
-use App\Modules\N8n\WorkflowManager;
-use App\Modules\N8n\Workflows\AnalyzeCvWorkflow;
-use App\Modules\Qualifications\QualificationsHelper;
+use App\Modules\N8n\Enums\AiAnalyzeTypeEnum;
+use App\Modules\N8n\Http\Requests\ShowUserCvAnalyzeRequest;
+use App\Modules\N8n\Http\Requests\UserCvAnalyzeRequest;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CvAnaliserController extends ApiController
 {
 
-    public function analyzeCV(Request $request, WorkflowManager $manager)
+    public function analyzeCV(UserCvAnalyzeRequest $request, User $user)
     {
         try {
+            $request->validated();
 
-            $user_id = Auth::user()->id;
-
-            $manager->run('analyze_cv', QualificationsHelper::preperForAi($user_id));
+            SendCvAnalyzeRequest::dispatch($user);
             return $this->respondOk("Your request sent");
         } catch (\Throwable $th) {
-            return $this->respondError("ERROR TO SENT REQUEST: $th->getMesaage()");
+            return $this->respondError("ERROR TO SENT REQUEST: " . $th->getMessage());
         }
     }
     public function store(Request $request)
     {
         $output = $request['result']['output'];
-        $user_id = $output['user_id'];
-
 
         if (!$output) {
             return response()->json([
                 'error' => 'Invalid payload format from n8n'
             ], 422);
         }
-
-
-
-        // Save full result JSON
-        User::where('id', $user_id)->update([
-            'ai' => json_encode($output)
-        ]);
-
-        // Fire your event for notifications
-        event(new CvAnalyzeProcessed($user_id));
-
+        StoreCvAnalyze::dispatch($output);
         return response()->json(['status' => 'received']);
+    }
+    public function show(ShowUserCvAnalyzeRequest $request, User $user)
+    {
+        try {
+            $request->validated();
+            $analyz = $user->analyze()->where('type', AiAnalyzeTypeEnum::CV())->orderBy('updated_at', 'desc')->first();
+            if ($analyz) {
+                return $this->respondWithSuccess($analyz);
+            } else {
+                return $this->respondNotFound("NOT FOUND");
+            }
+        } catch (\Throwable $th) {
+            return $this->respondError("ERROR TO SENT REQUEST: " . $th->getMessage());
+        }
     }
 }

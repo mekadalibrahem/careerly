@@ -23,7 +23,7 @@ class RateProcess implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct($workId)
+    public function __construct($workId, public $applicants_ids)
     {
         $this->workId = $workId;
     }
@@ -48,8 +48,19 @@ class RateProcess implements ShouldQueue
             /** ---------------------------------------------
              *  STEP 2 — Prepare Applicants
              * --------------------------------------------*/
-            // Convert applicants to array
-            $applicants = $work->applicants->map(function ($app) {
+            $applicants = $work->applicants;
+            $filteredIds = [];
+            // If specific applicant IDs are provided, filter by user_id
+            if (!is_null($this->applicants_ids) && is_array($this->applicants_ids)) {
+                // Ensure all IDs are integers (optional safety)
+                $filteredIds = array_filter($this->applicants_ids, fn($id) => is_numeric($id) && $id > 0);
+                if (empty($filteredIds)) {
+                    $applicants = collect();
+                } else {
+                    $applicants = $applicants->only($filteredIds);
+                }
+            }
+            $applicants = $applicants->map(function ($app) {
                 return [
                     "user_id"        => $app->user_id,
                     "work_id"        => $app->work_id,
