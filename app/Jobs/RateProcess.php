@@ -78,7 +78,7 @@ class RateProcess implements ShouldQueue
             /** ---------------------------------------------
              *  STEP 3 — Chunk Applicants
              * --------------------------------------------*/
-            $chunks     = array_chunk($applicants, 10);
+            $chunks     = array_chunk($applicants, 5);
             $totalPages = count($chunks);
 
             /** ---------------------------------------------

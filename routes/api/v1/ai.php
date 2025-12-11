@@ -16,6 +16,6 @@ Route::group([
         Route::get('user/{user}/analyze-cv-show', [CvAnaliserController::class, 'show'])->name("ai.user.analyzeCvShow");
         Route::post('/works/{work}/rateApplicants', [RateApplicantController::class, 'rate']);
     });
-    Route::put('/cv-analysis-result', [CvAnaliserController::class, 'store']);
-    Route::put('/rateApplicants-result', [RateApplicantController::class, 'store']);
+    Route::post('/cv-analysis-result', [CvAnaliserController::class, 'store']);
+    Route::post('/rateApplicants-result', [RateApplicantController::class, 'store']);
 });
