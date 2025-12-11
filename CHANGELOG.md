@@ -25,7 +25,7 @@
 - CRUD jobs (job, requirments)
 - reject applicant
 - select applicant
-- analize applicants by AI
+- analize applicants by AI ( all aplicants or select by ids)
 
 #### Job_seeker
 
