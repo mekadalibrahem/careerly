@@ -48,7 +48,7 @@ class SendCvAnalyzeRequest implements ShouldQueue
                 'payload' => $payload,
                 'user_id' => $user->id,
             ]);
-            $manager->run('analyze_cv', $payload);
+            $manager->run(AiAnalyzeTypeEnum::CV(), $payload);
             logger()->info(__CLASS__ . " - DONE");
         } catch (\Throwable $th) {
             logger()->error(__CLASS__ . " - FAILD JOB" .  $th->getMessage());

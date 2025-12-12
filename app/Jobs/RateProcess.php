@@ -116,7 +116,7 @@ class RateProcess implements ShouldQueue
                     'user_id' => $work->user_id,
                 ]);
 
-                $manager->run("rateApplicants", $payload);
+                $manager->run(AiAnalyzeTypeEnum::APPLICANT(), $payload);
             }
 
             logger()->info("RateProcess Job Completed Successfully for Work ID: {$this->workId}");
