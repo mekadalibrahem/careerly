@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Str;
 use App\Modules\N8n\Entities\WorkflowCall;
+use App\Modules\N8n\Enums\AiAnalyzeTypeEnum;
 use App\Modules\N8n\Workflows\AnalyzeCvWorkflow;
 
 class SendCvAnalyzeRequest implements ShouldQueue
@@ -41,7 +42,7 @@ class SendCvAnalyzeRequest implements ShouldQueue
 
             WorkflowCall::create([
                 'workflow_id' => $workflowUuid,
-                'type' => AnalyzeCvWorkflow::class,
+                'type' => AiAnalyzeTypeEnum::CV(),
                 'total_chunks' => 1,
                 'chunk_number' => 1,
                 'payload' => $payload,

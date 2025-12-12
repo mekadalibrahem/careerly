@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Events\RateApplicantProcessed;
 
 use App\Modules\N8n\Entities\WorkflowCall;
-
+use App\Modules\N8n\Enums\AiAnalyzeTypeEnum;
 use App\Modules\N8n\WorkflowManager;
 use App\Modules\N8n\Workflows\RateApplicantWorkflow;
 use App\Modules\Qualifications\QualificationsHelper;
@@ -109,7 +109,7 @@ class RateProcess implements ShouldQueue
                 ];
                 WorkflowCall::create([
                     'workflow_id' => $workflowUuid,
-                    'type' => RateApplicantWorkflow::class,
+                    'type' => AiAnalyzeTypeEnum::APPLICANT(),
                     'total_chunks' => $totalPages,
                     'chunk_number' => $i + 1,
                     'payload' => $payload,
