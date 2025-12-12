@@ -25,6 +25,7 @@ class StatsServices
             "recent_registrations" => self::getUserResentRegisteration(),
             "ai" => [
                 "request_by_status" => self::AIRequestcountByStatus(),
+                "request_by_types" => self::AIRequestcountByType(),
             ]
         ];
     }
