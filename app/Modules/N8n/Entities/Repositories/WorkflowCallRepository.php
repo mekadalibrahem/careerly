@@ -26,7 +26,7 @@ class WorkflowCallRepository
     {
         WorkflowCall::where('id', $id)->update([
             'status' => WorkflowStatusEnum::TIMEOUT->value,
-            'results' => ['error' => $reason],
+            'results' => json_encode(['error' => $reason]),
             'callback_received_at' => now(),
         ]);
     }
@@ -51,7 +51,7 @@ class WorkflowCallRepository
     public function isFullyCompleted(string $workflowId): bool
     {
         return WorkflowCall::where('workflow_id', $workflowId)
-            ->where('status', '!=', WorkflowStatusEnum::END->value)
+            ->whereNotIn('status', [WorkflowStatusEnum::END(), WorkflowStatusEnum::TIMEOUT()])
             ->count() === 0;
     }
 

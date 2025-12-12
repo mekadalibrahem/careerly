@@ -55,3 +55,7 @@
 - User staticties ( count by role , total , recent rejecter )
 - Job staticties ( count by type , total , total applicants )
 - AI Requests staticties ( count by status)
+
+#### Schedule tasks
+
+- Check ai request if take long time (more then 1 day ) set as TIMEOUT status  run every day
