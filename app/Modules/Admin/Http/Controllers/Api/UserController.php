@@ -4,21 +4,25 @@ namespace App\Modules\Admin\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
+use App\Modules\Admin\Http\Requests\IndexAdminUsersRequest;
 use App\Modules\Admin\Http\Requests\UpdateUserRoleRequest;
+use App\Modules\Admin\Http\Resources\AdminUserResource;
 use App\Modules\Admin\Services\UserManagmentService;
+use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
 
 
-    public function index()
+
+    public function index(IndexAdminUsersRequest $request)
     {
 
         try {
-            $users = UserManagmentService::getAllUser();
-            return $this->respondWithSuccess([
-                "users" => $users
-            ]);
+            $validated = $request->validated();
+
+
+            return UserManagmentService::getAllUser($validated) ;
         } catch (\Throwable $th) {
             return $this->respondError("ERROR  " .  $th->getMessage());
         }

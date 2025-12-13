@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "archtechx/enums": "^1.1",
+        "dedoc/scramble": "^0.13.8",
         "f9webltd/laravel-api-response-helpers": "^2.1",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
