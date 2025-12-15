@@ -52,7 +52,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('works');
-        Schema::dropIfExists('work_requirments');
+        Schema::dropIfExists('work_requirements');
         Schema::dropIfExists('applicants');
     }
 };
