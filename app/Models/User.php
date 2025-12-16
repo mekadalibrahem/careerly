@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Modules\Exports\Entities\Download;
 use App\Modules\N8n\Entities\Traits\HasAnalyzableTraits;
 use App\Modules\Qualifications\Traits\Entities\HasQualifications;
+use App\Modules\SupportTickets\Entities\SupportTicket;
 use App\Modules\Works\Entities\Models\Applicant;
 use App\Modules\Works\Entities\Models\Work;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -78,5 +79,10 @@ class User extends Authenticatable
     }
     public function downloads() : HasMany {
         return  $this->hasMany(Download::class);
+    }
+
+    public function supportTickets(): HasMany
+    {
+        return $this->hasMany(SupportTicket::class);
     }
 }

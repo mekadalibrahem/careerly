@@ -11,7 +11,7 @@ use App\Modules\Works\Http\Controllers\Api\UserApplicantController;
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantManagmentController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Exports\Http\Controllers\DownloadManagerController;
-
+use App\Modules\SupportTickets\Http\Controllers\SupportTicketsController;
 
 Route::group([
     "prefix" => "v1",
@@ -38,6 +38,16 @@ Route::group([
         Route::put("/{user}/notifications/{id}/markRead", [UserNotificationController::class, 'markdRead']);
         Route::get('/{user}/export-cv', [DownloadManagerController::class , 'store'])->name("export-cv.store");
         Route::get("/{user}/downloads/{download}" , [DownloadManagerController::class , 'download'])->name("files.download");
+
+    });
+    Route::group([
+       "prefix" => "support",
+       "as" => "support.",
+        "middleware" => ['auth:sanctum']
+    ],function (){
+        Route::get("/" , [SupportTicketsController::class, "index"])->name('support.index');
+        Route::get("/{supportTicket}" , [SupportTicketsController::class, "show"])->name('support.show');
+        Route::post("/" , [SupportTicketsController::class, "store"])->name('support.store');
     });
     Route::get("/cv-styles" , [\App\Modules\Exports\Http\Controllers\CvStylesController::class , 'index']);
 });
