@@ -17,8 +17,11 @@ class BrowserShotStrategy extends ExportStrategy
         try {
 
             $browsershot =  Browsershot::html($this->getHtml($data));
-
-
+            
+            if (!empty(config("export.browser_path", ''))) {
+                logger()->info(config("export.browser_path", 'browser not set'));
+                $browsershot->setChromePath(config("export.browser_path", ''));
+            }
             if (!empty(config("export.node_path", ''))) {
 
                 $browsershot->setNodeBinary(config("export.node_path", ''));
@@ -31,8 +34,7 @@ class BrowserShotStrategy extends ExportStrategy
                 // ->baseUrl(config('app.url'))
                 ->waitUntil('domcontentloaded')
                 ->timeout(90000);
-            // Increase memory limit for Puppeteer
-            $browsershot->setExtraExecutionArgs(['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--memory-pressure-off']);
+          
 
              $cvPdfFileContent = $browsershot->pdf();
              Storage::disk('temp')->put($saveAsFileName , $cvPdfFileContent);
