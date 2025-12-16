@@ -15,21 +15,23 @@ class StatsServices
     use HasJobStats;
     use HasAIStatus;
 
+    public static string $CACHE_KEY_STATS_DASHBOARD_ADMIN =  "stats.dashboard";
     public static function getAllStat():array{
-        
-       return Cache::remember('stats.dashboard', (60 * 5), function () {
-        return [
-            "total_users"         => self::getUserCount(),
-            "total_jobs"          => self::getUserCountByRole(),
-            "total_applications"  => self::getJobCount(),
-            "users_by_role"       => self::getApplicationCount(),
-            "jobs_by_type"        => self::getJobCountByType(),
-            "recent_registrations" => self::getUserResentRegisteration(),
-            "ai" => [
-                "request_by_status" => self::AIRequestcountByStatus(),
-                "request_by_types"  => self::AIRequestcountByType(),
-            ]
-        ];
-    });
+
+       return Cache::remember(self::$CACHE_KEY_STATS_DASHBOARD_ADMIN, (60 * 15), static function () {
+            return [
+                //users_by_role
+                "total_users"         => self::getUserCount(),
+                "users_by_role"          => self::getUserCountByRole(),
+                "total_jobs"  => self::getJobCount(),
+                "total_applications"       => self::getApplicationCount(),
+                "jobs_by_type"        => self::getJobCountByType(),
+                "recent_registrations" => self::getUserResentRegisteration(),
+                "ai" => [
+                    "request_by_status" => self::AIRequestcountByStatus(),
+                    "request_by_types"  => self::AIRequestcountByType(),
+                ]
+            ];
+       });
     }
 }
