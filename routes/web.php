@@ -10,7 +10,5 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'start');
 
 Route::get("/test",  function () {
-    $user = User::where('id', 3)->withQualifications()->first();
-    // $user = Skill::first();
-    dd($user);
+    return dd($usersId = User::where("id" , '>' , 1)->pluck('id')->toArray());
 });

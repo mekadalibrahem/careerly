@@ -4,6 +4,7 @@ use App\Modules\Admin\Http\Controllers\Api\StatsController;
 use App\Modules\Admin\Http\Controllers\Api\UserController;
 use App\Modules\Admin\Http\Middleware\HasAdminRoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Modules\Admin\Http\Controllers\Api\AdminSupportTicketsController;
 
 Route::group([
     "prefix" => "v1",
@@ -32,6 +33,15 @@ Route::group([
                 "as" => "stats."
             ], function () {
                 Route::get("", [StatsController::class, 'index'])->name("index");
+            });
+            Route::group([
+                'prefix' => "support",
+                "as" => "support."
+            ], function () {
+                Route::get("/", [AdminSupportTicketsController::class, 'index'])->name("index");
+                Route::get("/{supportTicket}", [AdminSupportTicketsController::class, 'show'])->name("show");
+                Route::put("/{supportTicket}/updateStatus", [AdminSupportTicketsController::class, 'updateStatus'])->name("update-status");
+                Route::put("/{supportTicket}/updateNote", [AdminSupportTicketsController::class, 'updateNote'])->name("update-note");
             });
         });
     });
