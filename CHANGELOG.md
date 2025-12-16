@@ -51,6 +51,15 @@
 - browser users
 - delete user
 
+##### Support tickets Management
+
+- view all tickets 
+- view ticket by id 
+- update status of ticket ( optional note , append)
+- update note if ticket  (option append)
+
+> Note : `append` option for add note as top of old note or if false replace old note with new one
+
 ##### Statistics
 
 - User statics ( count by role , total , recent rejecter )
@@ -60,3 +69,4 @@
 #### Schedule tasks
 
 - Check AI request if you take long time (more than 1 day ) set as TIMEOUT status  run every day
+- Check all download temp file if it is older than 1 day  mark as expired and delete form storage 
