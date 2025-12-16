@@ -39,4 +39,5 @@ Route::group([
         Route::get('/{user}/export-cv', [DownloadManagerController::class , 'store'])->name("export-cv.store");
         Route::get("/{user}/downloads/{download}" , [DownloadManagerController::class , 'download'])->name("files.download");
     });
+    Route::get("/cv-styles" , [\App\Modules\Exports\Http\Controllers\CvStylesController::class , 'index']);
 });
