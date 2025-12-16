@@ -1,9 +1,5 @@
 <?php
 
-// Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:api');
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\UserNotificationController;
@@ -14,7 +10,7 @@ use App\Modules\Qualifications\Http\Controllers\Api\SkillController;
 use App\Modules\Works\Http\Controllers\Api\UserApplicantController;
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantManagmentController;
 use Illuminate\Support\Facades\Route;
-
+use App\Modules\Exports\Http\Controllers\DownloadManagerController;
 
 
 Route::group([
@@ -40,5 +36,7 @@ Route::group([
         Route::delete("/{user}/notifications/{id}", [UserNotificationController::class, 'destroy']);
         Route::put("/{user}/notifications/markReadAll", [UserNotificationController::class, 'markdReadAll']);
         Route::put("/{user}/notifications/{id}/markRead", [UserNotificationController::class, 'markdRead']);
+        Route::get('/{user}/export-cv', [DownloadManagerController::class , 'store'])->name("export-cv.store");
+        Route::get("/{user}/downloads/{download}" , [DownloadManagerController::class , 'download'])->name("files.download");
     });
 });

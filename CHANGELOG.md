@@ -2,12 +2,12 @@
 
 ## V1.0
 
-### Fetures
+### Features
 
 #### Authentication
 
 - login(email,password)
-- register(name, email mpassword,confirm_password,role`recruiter|job_seeker`,title,phone,bio)
+- register(name, email password,confirm_password,role`recruiter|job_seeker`,title,phone,bio)
 
 #### User Profile
 
@@ -22,40 +22,41 @@
 
 #### Recruiter
 
-- CRUD jobs (job, requirments)
+- CRUD jobs (job, requirements)
 - reject applicant
 - select applicant
-- analize applicants by AI ( all aplicants or select by ids)
+- analyze applicants by AI ( all applicants or select by ids)
 
 #### Job_seeker
 
-- CRUD Qualifications (skills, projects,eductions ,cources)
+- CRUD Qualifications (skills, projects,educations ,courses)
 - browser jobs
 - applicant on job
 - accept job
-- analize profile by AI
+- analyze profile by AI
+- export cv as PDF file ( file will delete automatic from system after 1 Day)
 
 #### Jobs browser features
 
 - search by (name,company,location)
-- fillter by (recruiter_id ,type,status)
+- filter by (recruiter_id ,type,status)
 - pagination
 
 #### Admin
 
-##### User Managment
+##### User Management
 
 - update user role
 - ban/unban user
 - browser users
 - delete user
 
-##### Staticties
+##### Statistics
 
-- User staticties ( count by role , total , recent rejecter )
-- Job staticties ( count by type , total , total applicants )
-- AI Requests staticties ( count by status)
+- User statics ( count by role , total , recent rejecter )
+- Job statics ( count by type , total , total applicants )
+- AI Requests statics ( count by status)
 
 #### Schedule tasks
 
-- Check ai request if take long time (more then 1 day ) set as TIMEOUT status  run every day
+- Check AI request if you take long time (more than 1 day ) set as TIMEOUT status  run every day

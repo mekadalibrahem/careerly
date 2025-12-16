@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Modules\Exports\Entities\Download;
 use App\Modules\N8n\Entities\Traits\HasAnalyzableTraits;
 use App\Modules\Qualifications\Traits\Entities\HasQualifications;
 use App\Modules\Works\Entities\Models\Applicant;
@@ -74,5 +75,8 @@ class User extends Authenticatable
     public function applicants(): HasMany
     {
         return $this->hasMany(Applicant::class);
+    }
+    public function downloads() : HasMany {
+        return  $this->hasMany(Download::class);
     }
 }

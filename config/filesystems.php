@@ -37,6 +37,13 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/temp'),
+            'serve' => true,
+            'throw' => false,
+            'report' => false,
+        ],
 
         'public' => [
             'driver' => 'local',
