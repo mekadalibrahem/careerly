@@ -19,7 +19,7 @@ class AdminUserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email'=> $this->email,
-            'role' => $this->role,
+            'roles' => $this->roles->pluck(["name" ]),
             'title'=> $this->title,
             "ban_at"=>$this->ban_at,
             "isBaned" => (bool) $this->ban_at,

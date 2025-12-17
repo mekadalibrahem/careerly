@@ -36,7 +36,7 @@ class UserController extends ApiController
                 return $this->respondNotFound("NOT FOUND ITEM");
             }
             return $this->respondWithSuccess([
-                "user" => $user
+                "user" => new AdminUserResource($user)
             ]);
         } catch (\Throwable $th) {
             return $this->respondError("ERROR " .  $th->getMessage());

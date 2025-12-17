@@ -18,7 +18,7 @@ class UserManagmentService
 
     public static function getAllUser($params)
     {
-        $query = User::query();
+        $query = User::query()->with('roles');
         $per_page = 10;
         // filters
         if ( array_key_exists('role', $params)) {

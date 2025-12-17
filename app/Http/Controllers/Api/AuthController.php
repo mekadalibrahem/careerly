@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Auth\CreateUserRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,7 +24,7 @@ class AuthController extends ApiController
         $token = $user->createToken('api-token')->plainTextToken;
 
         return $this->respondWithSuccess([
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token,
         ]);
     }
@@ -43,7 +44,7 @@ class AuthController extends ApiController
 
         $token = $user->createToken('api-token')->plainTextToken;
         return $this->respondCreated([
-            'user' => $user,
+            'user' =>new UserResource($user),
             'token' => $token,
         ]);
     }
