@@ -60,6 +60,7 @@ class RenderCvFIleJob implements ShouldQueue
         $skills = $user->skills;
         $educations = $user->educations;
         $courses = $user->courses;
+        $phone = $user->phone;
 
         if(array_key_exists('title' , $tempData)){
             $title = $tempData['title'];
@@ -93,6 +94,7 @@ class RenderCvFIleJob implements ShouldQueue
                 'name' => $user->name,
                 'email' => $user->email,
                 "title" => $title,
+                "phone"=> $phone,
                 'bio' => $bio,
                 "courses" => $courses,
                 'educations' => $educations,
