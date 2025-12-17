@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Http\Requests;
 
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Utils\PermissionsKeyEnum;
 use App\Utils\SoftDeletedEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class IndexAdminUsersRequest extends FormRequest
     {
         $user = Auth::user();
 
-        if (!$user || !$user->role == UserRolesEnums::ADMIN()) {
+        if (!$user || !$user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())) {
             return false;
         }
         return true;

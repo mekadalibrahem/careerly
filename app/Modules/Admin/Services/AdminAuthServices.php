@@ -12,7 +12,7 @@ final class AdminAuthServices
     public static function AuthAdminRole(): bool
     {
         $user = Auth::user();
-        if ($user  && $user->role == UserRolesEnums::ADMIN()) {
+        if ($user  && $user->hasAnyRole(UserRolesEnums::SUPER_ADMIN(), UserRolesEnums::ADMIN())) {
             return true;
         } else {
             return false;

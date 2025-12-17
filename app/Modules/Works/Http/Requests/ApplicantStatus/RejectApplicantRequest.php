@@ -18,10 +18,8 @@ class RejectApplicantRequest extends FormRequest
         $user = Auth::user();
         $work = $this->route('work');
         $applicant = $this->route('applicant');
-        if ($user->id == $work->user_id && $applicant->work_id == $work->id) {
-            if ($applicant->status == ApplicantStatusEnum::PENDING() ||  $applicant->status == ApplicantStatusEnum::REJECTED() || $applicant->status == null) {
-                return true;
-            }
+        if($user->can('reject' , $applicant, $work)){
+            return  true;
         }
 
 

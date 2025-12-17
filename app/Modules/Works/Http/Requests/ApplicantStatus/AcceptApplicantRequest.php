@@ -18,11 +18,10 @@ class AcceptApplicantRequest extends FormRequest
         $authedUser = Auth::user();
         $applicantUser = $this->route('user');
         $applicant = $this->route('applicant');
-        if ($applicantUser->id == $authedUser->id && $applicant->user_id == $authedUser->id) {
-            if ($applicant->status == ApplicantStatusEnum::PENDING()) {
+        if ($authedUser->can('accept', $applicant)) {
                 return true;
             }
-        }
+
 
 
         return false;

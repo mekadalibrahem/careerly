@@ -5,6 +5,7 @@ namespace App\Modules\Admin\Http\Requests;
 
 use App\Modules\Users\Enums\UserRolesEnums;
 use App\Modules\Works\Entities\Models\Applicant;
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -21,7 +22,7 @@ class UpdateUserRoleRequest extends FormRequest
         if (!$user || !$updatedUser) {
             return false;
         }
-        if (!$user->role == UserRolesEnums::ADMIN()) {
+        if (!$user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())) {
             return false;
         }
         return $user->can("update", $updatedUser);

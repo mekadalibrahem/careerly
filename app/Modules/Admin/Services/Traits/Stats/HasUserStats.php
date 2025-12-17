@@ -4,6 +4,7 @@ namespace App\Modules\Admin\Services\Traits\Stats;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 trait HasUserStats
 {
@@ -17,8 +18,10 @@ trait HasUserStats
 
     public static function getUserCountByRole()
     {
-        return User::select('role', DB::raw("count(*) as total"))
-            ->groupBy('role')
+        return Role::query()
+            ->leftJoin('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('roles.name as role', DB::raw('COUNT(model_has_roles.model_id) as total'))
+            ->groupBy('roles.name')
             ->pluck('total', 'role')
             ->toArray();
     }

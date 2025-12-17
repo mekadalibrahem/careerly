@@ -22,7 +22,7 @@ class UserManagmentService
         $per_page = 10;
         // filters
         if ( array_key_exists('role', $params)) {
-            $query->where('role', $params['role']);
+            $query->role($params['role']);
         }
         if ( array_key_exists('after_created_at', $params)) {
             $query->whereDate('created_at' , '>' , $params['after_created_at']);
@@ -55,7 +55,7 @@ class UserManagmentService
     }
     public static function roleUser(User $user,   $role)
     {
-        $user->role = $role;
-        return $user->save();
+        $user->syncRoles($role);
+        return true;
     }
 }

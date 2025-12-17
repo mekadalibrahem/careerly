@@ -3,14 +3,13 @@
 namespace App\Modules\Works\Policies;
 
 
-
 use App\Models\User;
-use App\Modules\Users\Enums\UserRolesEnums;
 use App\Modules\Works\Entities\Models\Work;
+use App\Modules\Works\Entities\Models\WorkRequirement;
 use App\Utils\PermissionsKeyEnum;
 use Illuminate\Auth\Access\Response;
 
-class WorkPolicy
+class WorkRequirementPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -23,7 +22,7 @@ class WorkPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Work $work): bool
+    public function view(User $user, WorkRequirement $workRequirement): bool
     {
         return true;
     }
@@ -31,18 +30,16 @@ class WorkPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user,  Work $work): bool
     {
-        if ($user->hasPermissionTo(PermissionsKeyEnum::CREATE_JOBS())) {
-            return true;
-        }
-        return false;
+
+        return $work->isOwnedBy($user) && $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_OWN_JOBS());
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Work $work): bool
+    public function update(User $user, Work $work, WorkRequirement $workRequirement): bool
     {
         return $work->isOwnedBy($user) && $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_OWN_JOBS());
     }
@@ -50,7 +47,7 @@ class WorkPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Work $work): bool
+    public function delete(User $user, Work $work, WorkRequirement $workRequirement): bool
     {
         return $work->isOwnedBy($user) && $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_OWN_JOBS());
     }
@@ -58,7 +55,7 @@ class WorkPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Work $work): bool
+    public function restore(User $user, Work $work, WorkRequirement $workRequirement): bool
     {
         return $work->isOwnedBy($user) && $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_OWN_JOBS());
     }
@@ -66,7 +63,7 @@ class WorkPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Work $work): bool
+    public function forceDelete(User $user, Work $work, WorkRequirement $workRequirement): bool
     {
         return $work->isOwnedBy($user) && $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_OWN_JOBS());
     }

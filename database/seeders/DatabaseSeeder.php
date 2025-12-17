@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Modules\Users\Enums\UserRolesEnums;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,11 +16,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            PermissionsSeeder::class,
             UserSeeder::class,
             CandidateSeeder::class,
             HRWorkSeeder::class,
             ApplicantSeeder::class,
             SupportTicketsSeeder::class,
+            BasicUserSeeder::class
         ]);
     }
 }

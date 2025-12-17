@@ -5,6 +5,7 @@ namespace App\Modules\Qualifications\Policies;
 use App\Models\User;
 use App\Modules\Qualifications\Entities\Models\Course;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Auth\Access\Response;
 
 class CoursePolicy
@@ -30,10 +31,7 @@ class CoursePolicy
      */
     public function create(User $user): bool
     {
-        if ($user->role == UserRolesEnums::JOBSEEKER()) {
-            return true;
-        }
-        return false;
+        return $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_PROFILE());
     }
 
     /**

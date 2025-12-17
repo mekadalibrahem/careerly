@@ -12,6 +12,7 @@ enum UserRolesEnums: string
     use Names;
     use Values;
 
+    case SUPER_ADMIN = "super-admin";
     case ADMIN = 'admin';
     case USER = 'user';
     case RECRUITER = 'recruiter';

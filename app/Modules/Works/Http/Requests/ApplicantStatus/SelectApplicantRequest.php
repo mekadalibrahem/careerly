@@ -15,17 +15,12 @@ class SelectApplicantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $hrUser = Auth::user();
+        $user = Auth::user();
         $work = $this->route('work');
         $applicant = $this->route('applicant');
-        if ($hrUser->id == $work->user_id && $applicant->work_id == $work->id) {
-            if ($applicant->status == ApplicantStatusEnum::PENDING() ||  $applicant->status == ApplicantStatusEnum::REJECTED() || $applicant->status == null) {
-                return true;
-            }
-        }
 
 
-        return false;
+        return $user->can('select' , $applicant, $work);
     }
 
     /**

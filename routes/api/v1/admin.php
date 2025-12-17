@@ -43,6 +43,7 @@ Route::group([
                 Route::put("/{supportTicket}/updateStatus", [AdminSupportTicketsController::class, 'updateStatus'])->name("update-status");
                 Route::put("/{supportTicket}/updateNote", [AdminSupportTicketsController::class, 'updateNote'])->name("update-note");
             });
+            Route::get("/roles" , [\App\Modules\Admin\Http\Controllers\Api\AdminRoleController::class, 'index'])->name("roles.index");
         });
     });
 });

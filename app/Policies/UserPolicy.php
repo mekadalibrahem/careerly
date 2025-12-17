@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Auth\Access\Response;
 
 class UserPolicy
@@ -37,9 +38,23 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN() ) {
+        // user can update own account
+        if($user->is($model) ){
+            return  true;
+        }
+        // no one can change super admin information
+        if( $model->hasRole(UserRolesEnums::SUPER_ADMIN())){
+           if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_ADMINS())){
+               return true;
+           }
+
+            return false;
+        }
+
+        if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())){
             return true;
         }
+
         return false;
     }
 
@@ -48,9 +63,19 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN()) {
+        // no one can change super admin information
+        if( $model->hasRole(UserRolesEnums::SUPER_ADMIN())){
+            if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_ADMINS())){
+                return true;
+            }
+
+            return false;
+        }
+
+        if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())){
             return true;
         }
+
         return false;
     }
 
@@ -59,9 +84,19 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        if ($user->id == $model->id || $user->role == UserRolesEnums::ADMIN() ) {
+        // no one can change super admin information
+        if( $model->hasRole(UserRolesEnums::SUPER_ADMIN())){
+            if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_ADMINS())){
+                return true;
+            }
+
+            return false;
+        }
+
+        if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())){
             return true;
         }
+
         return false;
     }
 

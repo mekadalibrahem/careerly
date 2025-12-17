@@ -17,7 +17,7 @@ class ApplicantSeeder extends Seeder
         // Get all Jobs
         $works = Work::all();
         // Get all Candidates
-        $candidates = User::where('role', UserRolesEnums::JOBSEEKER())->get();
+        $candidates = User::role(UserRolesEnums::JOBSEEKER())->get();
 
         if ($candidates->count() < 15) {
             $this->command->error("Not enough candidates. Run CandidateSeeder first.");
@@ -44,9 +44,7 @@ class ApplicantSeeder extends Seeder
                     Applicant::create([
                         'work_id' => $work->id,
                         'user_id' => $candidate->id,
-                        // Requirement: "rate profile from 1,100"
-                       
-                        // 'accepted' => rand(0, 100) > 90, // Only 10% accepted
+
                     ]);
                 }
             }

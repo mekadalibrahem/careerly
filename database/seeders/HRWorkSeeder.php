@@ -79,14 +79,13 @@ class HRWorkSeeder extends Seeder
             $hr = User::create([
                 'name' => fake()->name(),
                 'email' => "hr_{$i}@gmail.local",
-                'role' => UserRolesEnums::RECRUITER(),
                 'title' => 'Talent Acquisition Manager',
                 "bio" => 'Talent Acquisition Manager',
-                "phone" => fake()->numerify('##########'),
+                "phone" => fake()->phoneNumber(),
                 'password' => $password,
                 'email_verified_at' => now(),
             ]);
-
+            $hr->assignRole(UserRolesEnums::RECRUITER());
             // 2. Create Works (Jobs) for this HR
             // Each HR posts between 2 and 5 jobs
             $numberOfJobs = rand(2, 5);

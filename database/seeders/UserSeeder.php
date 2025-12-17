@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Modules\Users\Enums\UserRolesEnums;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,11 +13,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'admin user',
             'email' => 'admin@gmail.local',
-            'role' => UserRolesEnums::ADMIN,
             'title' => "site admin"
         ]);
+        $user->assignRole(UserRolesEnums::SUPER_ADMIN());
+        $user->assignRole(UserRolesEnums::ADMIN());
     }
 }

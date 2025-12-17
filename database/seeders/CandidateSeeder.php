@@ -82,11 +82,13 @@ class CandidateSeeder extends Seeder
             $user = User::create([
                 'name' => fake()->name(),
                 'email' => "user_{$i}@gmail.local",
-                'role' => UserRolesEnums::JOBSEEKER(),
                 'title' => $pathData['titles'][array_rand($pathData['titles'])], // Pick a relevant title
                 'password' => $password,
+                "bio" => fake()->text(),
+                "phone" => fake()->phoneNumber(),
                 'email_verified_at' => now(),
             ]);
+            $user->assignRole(UserRolesEnums::JOBSEEKER());
 
             // 3. Add Related Skills (3 to 5 skills)
             $userSkills = collect($pathData['skills'])->random(rand(3, count($pathData['skills'])));

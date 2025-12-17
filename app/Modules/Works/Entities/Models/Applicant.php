@@ -32,4 +32,6 @@ class Applicant extends Model
     {
         return $this->belongsTo(Work::class);
     }
+
+
 }

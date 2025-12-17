@@ -5,6 +5,7 @@ namespace App\Modules\Qualifications\Policies;
 use App\Models\User;
 use App\Modules\Qualifications\Entities\Models\Project;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Auth\Access\Response;
 
 class ProjectPolicy
@@ -30,7 +31,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == UserRolesEnums::JOBSEEKER();
+        return $user->hasPermissionTo(PermissionsKeyEnum::MANAGE_PROFILE());
     }
 
     /**
