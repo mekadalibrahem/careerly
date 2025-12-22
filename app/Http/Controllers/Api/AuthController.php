@@ -35,13 +35,13 @@ class AuthController extends ApiController
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'role' => $validated['role'],
+
             'title' => $validated['title'],
             "bio"  => $validated['bio'],
             'phone' => $validated['phone'],
             'password' => Hash::make($validated['password']),
         ]);
-
+        $user->assignRole($validated['role']);
         $token = $user->createToken('api-token')->plainTextToken;
         return $this->respondCreated([
             'user' =>new UserResource($user),
