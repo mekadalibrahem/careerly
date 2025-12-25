@@ -22,7 +22,7 @@ class StoreFileRequest extends  FormRequest {
         if($authedUser->id !== $requestedUser->id){
             return false;
         }
-        if($authedUser->can('create', Download::class)){
+        if($authedUser->can('exportCv', Download::class)){
             return true;
         }
         return  false;

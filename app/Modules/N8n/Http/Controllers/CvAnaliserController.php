@@ -42,12 +42,12 @@ class CvAnaliserController extends ApiController
     {
         try {
             $request->validated();
-            $analyz = $user->analyze()->where('type', AiAnalyzeTypeEnum::CV())->orderBy('updated_at', 'desc')->first();
-            if ($analyz) {
-                return $this->respondWithSuccess($analyz);
-            } else {
-                return $this->respondNotFound("NOT FOUND");
+            $analyze = $user->analyze()->where('type', AiAnalyzeTypeEnum::CV())->orderBy('updated_at', 'desc')->first();
+            if ($analyze) {
+                return $this->respondWithSuccess($analyze->toArray());
             }
+
+            return $this->respondNotFound("NOT FOUND");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR TO SENT REQUEST: " . $th->getMessage());
         }

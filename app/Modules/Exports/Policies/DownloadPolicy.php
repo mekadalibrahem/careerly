@@ -5,6 +5,7 @@ namespace App\Modules\Exports\Policies;
 use App\Models\User;
 use App\Modules\Exports\Entities\Download;
 use App\Modules\Users\Enums\UserRolesEnums;
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Auth\Access\Response;
 
 class DownloadPolicy
@@ -66,5 +67,9 @@ class DownloadPolicy
     public function forceDelete(User $user, Download $model): bool
     {
         return false;
+    }
+    public function exportCv(User $user)
+    {
+        return $user->hasPermissionTo(PermissionsKeyEnum::EXPORT_CV());
     }
 }

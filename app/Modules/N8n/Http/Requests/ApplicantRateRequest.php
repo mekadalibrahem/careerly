@@ -4,6 +4,7 @@
 namespace App\Modules\N8n\Http\Requests;
 
 
+use App\Utils\PermissionsKeyEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,10 @@ class ApplicantRateRequest extends FormRequest
         $userAuthedOwnedWork = Auth::user();
         $work = $this->route('work');
 
-        if ($userAuthedOwnedWork && $work && $work->user_id == $userAuthedOwnedWork->id) {
-            return true;
-        }
-        return false;
+        return $userAuthedOwnedWork &&
+            $work &&
+            $work->user->is($userAuthedOwnedWork->id) &&
+            $userAuthedOwnedWork->hasPermissionTo(PermissionsKeyEnum::AI_REQUEST_ANALYZE_APPLICANT());
     }
 
     /**

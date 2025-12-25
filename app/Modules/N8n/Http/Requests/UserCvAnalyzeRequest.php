@@ -18,10 +18,10 @@ class UserCvAnalyzeRequest extends FormRequest
         $userAuthed = Auth::user();
         $user = $this->route('user');
         // return dd($user);
-        if ($userAuthed && $user && $user->id == $userAuthed->id && $userAuthed->hasPermissionTo(PermissionsKeyEnum::MANAGE_PROFILE())) {
-            return true;
-        }
-        return false;
+        return $userAuthed &&
+            $user &&
+            $user->is($userAuthed) &&
+            $userAuthed->hasPermissionTo(PermissionsKeyEnum::AI_REQUEST_ANALYZE_PROFILE());
     }
 
     /**

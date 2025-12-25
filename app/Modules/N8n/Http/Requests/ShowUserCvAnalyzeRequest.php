@@ -17,10 +17,7 @@ class ShowUserCvAnalyzeRequest extends FormRequest
         $userAuthed = Auth::user();
         $user = $this->route('user');
 
-        if ($userAuthed && $user && $user->id == $userAuthed->id) {
-            return true;
-        }
-        return false;
+        return $userAuthed && $user && $user->is($userAuthed);
     }
 
     /**
