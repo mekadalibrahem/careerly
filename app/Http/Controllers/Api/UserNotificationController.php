@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
-use App\Modules\Works\Entities\DTOs\WorkRegistrationDTO;
+use App\Modules\Works\Entities\Dto\WorkUpdatingDto;
 use App\Modules\Works\Entities\Models\Work;
 use App\Modules\Works\Http\Requests\StoreWorkRequest;
 use App\Modules\Works\Http\Requests\UpdateWorkRequest;

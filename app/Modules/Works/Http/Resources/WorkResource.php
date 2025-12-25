@@ -18,6 +18,7 @@ class WorkResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "type" => $this->type,
             "description" => $this->description,
             "company" => $this->company,
             "location" => $this->location,

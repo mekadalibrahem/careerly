@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Works\Entities\DTOs;
+namespace App\Modules\Works\Entities\Dto;
 
 use App\Modules\Works\Enums\WorkStatusEnum;
 
-final readonly class WorkRegistrationDTO
+final readonly class WorkRegistrationDto
 {
 
 

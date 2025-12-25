@@ -4,14 +4,14 @@ namespace App\Modules\Works\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Api\ApiController;
-use App\Modules\Works\Entities\DTOs\WorkRegistrationDTO;
+use App\Modules\Works\Entities\Dto\WorkUpdatingDto;
 use App\Modules\Works\Entities\Models\Work;
+use App\Modules\Works\Http\Requests\IndexWorkRequest;
 use App\Modules\Works\Http\Requests\StoreWorkRequest;
 use App\Modules\Works\Http\Requests\UpdateWorkRequest;
 use App\Modules\Works\Http\Resources\WorkResource;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Request;
 
 class WorkController extends ApiController
 {
@@ -19,38 +19,34 @@ class WorkController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(IndexWorkRequest $request)
     {
         try {
-
+            $validated = $request->validated();
             $query = Work::query()->with(['user', 'applicants']);
-            // filterss
-            if ($request->has('recruiter_id') && $request->recruiter_id != null) {
-                $query->where('user_id', $request->recruiter_id);
+            // filters
+            if (array_key_exists('recruiter_id', $validated)) {
+                $query->where('user_id', $validated['recruiter_id']);
             }
-            if ($request->has('type') &&  $request->type != null) {
-                $query->where('type', $request->type);
+            if (array_key_exists('type', $validated)) {
+                $query->whereIn('type', $validated['type']);
             }
-            if ($request->has('status') && $request->status != null) {
-                $query->where('status', $request->status);
+            if (array_key_exists('status', $validated)) {
+                $query->where('status', $validated['status']);
             }
-            // search 
-            if ($request->has('name') && $request->name != null) {
-                $query->where('name', 'LIKE', '%' . $request->name . '%');
+            // search
+
+            if (array_key_exists('searchString' , $validated)) {
+                $query->whereAny(['name','company','location','description','requirements'], 'LIKE', '%' . $validated['searchString'] . '%');
             }
-            if ($request->has('company') && $request->company != null) {
-                $query->where('company', 'LIKE', '%' . $request->company . '%');
-            }
-            if ($request->has('location') && $request->location != null) {
-                $query->where('location', 'LIKE', '%' . $request->location . '%');
-            }
+
 
 
 
 
             return WorkResource::collection($query->paginate(15));
         } catch (\Throwable $th) {
-            return $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -66,9 +62,9 @@ class WorkController extends ApiController
 
                 return new WorkResource($work);
             }
-            $this->respondNotFound("FAILD ITEM  NOT FOUND");
+            $this->respondNotFound("FAILED ITEM  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD : " . $th->getMessage());
+            $this->respondError("FAILED : " . $th->getMessage());
         }
     }
 
@@ -81,7 +77,7 @@ class WorkController extends ApiController
         $validation = $request->validated();
         try {
             $user =  Auth::user();
-            $workDto = WorkRegistrationDTO::fromArray($validation);
+            $workDto = WorkUpdatingDto::fromArray($validation);
             $data = $workDto->toArray();
             $data['user_id'] = $user->id;
             $work = Work::create($data);
@@ -104,7 +100,7 @@ class WorkController extends ApiController
 
         $validation = $request->validated();
         try {
-            $workDto = WorkRegistrationDTO::fromArray($validation);
+            $workDto = WorkUpdatingDto::fromArray($validation);
             $update = $work->update($workDto->toArray());
             if ($update) {
                 return $this->respondWithSuccess([
@@ -128,9 +124,9 @@ class WorkController extends ApiController
                 $work->delete();
                 return $this->respondOk("Item deleted");
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 }
