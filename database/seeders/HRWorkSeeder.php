@@ -79,8 +79,7 @@ class HRWorkSeeder extends Seeder
             $hr = User::create([
                 'name' => fake()->name(),
                 'email' => "hr_{$i}@gmail.local",
-                'title' => 'Talent Acquisition Manager',
-                "bio" => 'Talent Acquisition Manager',
+                "company" => fake()->company(),
                 "phone" => fake()->phoneNumber(),
                 'password' => $password,
                 'email_verified_at' => now(),

@@ -27,10 +27,11 @@ class CreateUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'role' => ['required', 'string', Rule::enum(UserRolesEnums::class)->except([UserRolesEnums::SUPER_ADMIN, UserRolesEnums::ADMIN])],
-            'title' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
+            'title' => 'nullable|string|max:255',
             "bio" => "nullable|string|max:2500",
-            "phone" => "nullable|string|max:15"
+            "phone" => "nullable|string|max:15",
+            "company" => "nullable|string|max:255"
         ];
     }
 }

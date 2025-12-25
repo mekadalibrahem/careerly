@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->longText("bio")->nullable();
             $table->string("phone")->nullable();
+            $table->string("company")->nullable();
             $table->rememberToken();
             $table->timestamp("ban_at")->nullable();
             $table->softDeletes();

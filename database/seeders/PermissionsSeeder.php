@@ -57,7 +57,8 @@ class PermissionsSeeder extends Seeder
         $role->givePermissionTo([
             PermissionsKeyEnum::MANAGE_OWN_JOBS(),
             PermissionsKeyEnum::VIEW_APPLICATIONS(),
-            PermissionsKeyEnum::CREATE_JOBS()
+            PermissionsKeyEnum::CREATE_JOBS(),
+            PermissionsKeyEnum::AI_REQUEST_ANALYZE_APPLICANT(),
         ]);
         $role =Role::create([
             "name" => UserRolesEnums::JOBSEEKER(),
@@ -66,7 +67,9 @@ class PermissionsSeeder extends Seeder
         $role->givePermissionTo([
             PermissionsKeyEnum::MANAGE_PROFILE(),
             PermissionsKeyEnum::APPLY_TO_JOB(),
-            PermissionsKeyEnum::VIEW_JOBS()
+            PermissionsKeyEnum::VIEW_JOBS(),
+            PermissionsKeyEnum::AI_REQUEST_ANALYZE_PROFILE(),
+            PermissionsKeyEnum::EXPORT_CV()
 
         ]);
         $role =Role::create([

@@ -19,6 +19,5 @@ class UserSeeder extends Seeder
             'title' => "site admin"
         ]);
         $user->assignRole(UserRolesEnums::SUPER_ADMIN());
-        $user->assignRole(UserRolesEnums::ADMIN());
     }
 }

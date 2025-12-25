@@ -34,6 +34,7 @@ enum PermissionsKeyEnum : string
     case CREATE_JOBS = "create-jobs";
     case VIEW_APPLICATIONS = "view-applications";
     case MANAGE_OWN_JOBS = "manage-own-jobs";
+    case AI_REQUEST_ANALYZE_APPLICANT = "ai-request-analyze-applicant";
     /**
      * Job seeker Permissions
      */
@@ -41,5 +42,6 @@ enum PermissionsKeyEnum : string
     case VIEW_JOBS = "view-jobs";
     case APPLY_TO_JOB = "apply-to-job";
     case MANAGE_PROFILE = "manage-profile";
-
+    case AI_REQUEST_ANALYZE_PROFILE = "ai-request-analyze-profile";
+    case EXPORT_CV = "export-cv";
 }

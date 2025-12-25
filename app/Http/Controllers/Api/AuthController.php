@@ -35,10 +35,10 @@ class AuthController extends ApiController
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-
-            'title' => $validated['title'],
-            "bio"  => $validated['bio'],
-            'phone' => $validated['phone'],
+            'company' => $validated['company']?? null,
+            'title' => $validated['title']?? null,
+            "bio"  => $validated['bio']?? null,
+            'phone' => $validated['phone']?? null,
             'password' => Hash::make($validated['password']),
         ]);
         $user->assignRole($validated['role']);

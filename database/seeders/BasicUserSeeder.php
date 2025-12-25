@@ -18,9 +18,10 @@ class BasicUserSeeder extends Seeder
             $user = User::create([
                 'name' => fake()->name(),
                 'email' => "buser_$i@gmail.local",
-                'title' => "basic admin",
-                "bio" => "basic user",
-                "password" => Hash::make("password")
+                'title' => "basic user",
+                "bio" => "basic user bio",
+                "password" => Hash::make("password"),
+                "email_verified_at" => now()
             ]);
             $user->assignRole(UserRolesEnums::USER());
         }

@@ -40,7 +40,8 @@ class User extends Authenticatable
         'password',
         "ban_at",
         "phone",
-        "bio"
+        "bio",
+        'company'
     ];
 
     /**
