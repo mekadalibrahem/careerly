@@ -17,7 +17,7 @@ class RateApplicantController extends ApiController
 
         try {
             $validated = $request->validated();
-            RateProcess::dispatch($work->id,  $validated['applicants_ids']);
+            RateProcess::dispatch($work->id,  $validated['applicants_ids'] ?? null);
             return $this->respondOk("Your request sent");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR TO SENT REQUEST: $th->getMesaage()");

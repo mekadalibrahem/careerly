@@ -20,7 +20,7 @@ class ApplicantRateRequest extends FormRequest
 
         return $userAuthedOwnedWork &&
             $work &&
-            $work->user->is($userAuthedOwnedWork->id) &&
+            $work->user->is($userAuthedOwnedWork) &&
             $userAuthedOwnedWork->hasPermissionTo(PermissionsKeyEnum::AI_REQUEST_ANALYZE_APPLICANT());
     }
 
