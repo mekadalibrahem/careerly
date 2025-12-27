@@ -69,7 +69,7 @@ class ProjectController extends ApiController
                 'name' => $validation['name'],
                 'description' => $validation['description'],
                 'tools' => $validation['tools'],
-                'url' => $validation['url'],
+                'url' => $validation['url']?? null,
                 'user_id' => $user->id
             ]);
             if ($project) {
@@ -94,7 +94,7 @@ class ProjectController extends ApiController
             $project->name     = $validation['name'];
             $project->description = $validation['description'];
             $project->tools     = $validation['tools'];
-            $project->url      = $validation['url'];
+            $project->url      = $validation['url']?? null;
             if ($project->save()) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",

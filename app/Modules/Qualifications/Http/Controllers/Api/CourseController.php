@@ -67,7 +67,7 @@ class CourseController extends ApiController
                 'name' => $validation['name'],
                 'provider' => $validation['provider'],
                 'duration' => $validation['duration'],
-                'url' => $validation['url'],
+                'url' => $validation['url'] ?? null,
                 'user_id' => $user->id
             ]);
             if ($course) {
@@ -92,7 +92,7 @@ class CourseController extends ApiController
             $course->name     = $validation['name'];
             $course->provider = $validation['provider'];
             $course->duration = $validation['duration'];
-            $course->url      = $validation['url'];
+            $course->url      = $validation['url']?? null;
             if ($course->save()) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",

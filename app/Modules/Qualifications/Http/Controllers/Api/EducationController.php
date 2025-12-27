@@ -71,7 +71,7 @@ class EducationController extends ApiController
                 'degree' => $validation['degree'],
                 'grade' => $validation['grade'],
                 'start_at' => $validation['start_at'],
-                'end_at' => $validation['end_at'],
+                'end_at' => $validation['end_at'] ?? null,
                 'user_id' => $user->id
             ]);
             if ($education) {
@@ -98,7 +98,7 @@ class EducationController extends ApiController
             $education->degree = $validation['degree'];
             $education->grade      = $validation['grade'];
             $education->start_at      = $validation['start_at'];
-            $education->end_at      = $validation['end_at'];
+            $education->end_at      = $validation['end_at']?? null;
             if ($education->save()) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",
