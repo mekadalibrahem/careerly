@@ -25,6 +25,8 @@ class AdminUserResource extends JsonResource
             "isBaned" => (bool) $this->ban_at,
             "phone"=> $this->phone,
             "bio" => $this->bio,
+            "email_verified_at" => $this->email_verified_at,
+            "isEmailVerified" => (bool) $this->email_verified_at,
             "created_at"=> $this->created_at,
             'updated_at' => $this->updated_at,
             "deleted_at"=> $this->deleted_at,
