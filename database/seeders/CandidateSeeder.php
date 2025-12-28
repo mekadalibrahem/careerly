@@ -92,8 +92,12 @@ class CandidateSeeder extends Seeder
 
             // 3. Add Related Skills (3 to 5 skills)
             $userSkills = collect($pathData['skills'])->random(rand(3, count($pathData['skills'])));
+            $levels = ['beginner' ,'intermediate', 'advanced' ,'expert'];
             foreach ($userSkills as $skillName) {
-                Skill::create(['user_id' => $user->id, 'name' => $skillName]);
+                Skill::create([
+                    'user_id' => $user->id,
+                    'name' => $skillName ,
+                    "level" =>  fake()->randomElement($levels)]);
             }
 
             // 4. Add Related Project (1 or 2)
