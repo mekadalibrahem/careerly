@@ -59,4 +59,8 @@ class AcceptOnWork extends Notification
             "work_name" => $this->work_name,
         ];
     }
+    public function databaseType(object $notifiable): string
+    {
+        return 'accept-on-work';
+    }
 }

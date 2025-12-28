@@ -58,4 +58,8 @@ class CvAnalyzeEnd extends Notification
             "message" => "Your CV analyze end",
         ];
     }
+    public function databaseType(object $notifiable): string
+    {
+        return 'cv-analyze-end';
+    }
 }

@@ -54,7 +54,11 @@ class FaildCvAnalyze extends Notification
     public function toDatabase(object $notifiable)
     {
         return  [
-            "message" => "Your CV analyze FAILD TIME OUT TRY AGEN",
+            "message" => "Your CV analyze FAILED TIME OUT TRY AGEN",
         ];
+    }
+    public function databaseType(object $notifiable): string
+    {
+        return 'cv-analyze-failed';
     }
 }

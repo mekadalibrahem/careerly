@@ -26,7 +26,7 @@ class SendRenderCvEndNotification extends Notification
     public function toDatabase($notifiable): array
     {
         $data =  [];
-        $data['message'] ="Generate CV file end";
+        $data['message'] ="Generate CV file end and this download link and it is available for 1 Day";
         if($this->file_id>0){
             $data['file_id'] = $this->file_id;
             $data["link"] = route("user.files.download",[
@@ -45,5 +45,9 @@ class SendRenderCvEndNotification extends Notification
     public function toArray($notifiable): array
     {
         return [];
+    }
+    public function databaseType(object $notifiable): string
+    {
+        return 'render-cv-end';
     }
 }

@@ -56,11 +56,14 @@ class ApplicantSelectedNotification extends Notification
     public function toDatabase(object $notifiable)
     {
         return  [
-            "message" => "Your reuqest for job selected",
+            "message" => "Your request for job selected",
             "work_id" => $this->work_id,
-            "work_url" => route('works.show', $this->work_id),
-            'applicant_url' => route('works.applicants.show', [$this->work_id, $this->applicant_id])
+            'applicant_id' =>$this->applicant_id
 
         ];
+    }
+    public function databaseType(object $notifiable): string
+    {
+        return 'applicant-selected';
     }
 }

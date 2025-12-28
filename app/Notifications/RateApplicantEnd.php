@@ -56,6 +56,11 @@ class RateApplicantEnd extends Notification
         return  [
             "message" => $this->message,
             "work_id" => $this->work_id,
+
         ];
+    }
+    public function databaseType(object $notifiable): string
+    {
+        return 'rate-applicant-end';
     }
 }

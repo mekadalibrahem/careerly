@@ -54,9 +54,12 @@ class FaildRateApplicant extends Notification
     public function toDatabase(object $notifiable)
     {
         return  [
-            "message" => "Your rate  Applicants FAILD TIME OUT TRY AGEN",
+            "message" => "Your rate  Applicants FAILED TIME OUT TRY AGEN",
             "work_id" => $this->work_id,
-            "work_link" => route('works.show', $this->work_id)
         ];
+    }
+    public function databaseType(object $notifiable): string
+    {
+        return 'rate-applicant-failed';
     }
 }
