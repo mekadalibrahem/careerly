@@ -3,13 +3,11 @@
 
 namespace App\Modules\Admin\Http\Requests;
 
-use App\Modules\Users\Enums\UserRolesEnums;
 use App\Utils\PermissionsKeyEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
-class UpdateUserRoleRequest extends FormRequest
+class AdminDeleteUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,14 +15,14 @@ class UpdateUserRoleRequest extends FormRequest
     public function authorize(): bool
     {
         $user = Auth::user();
-        $updatedUser = $this->route('user');
-        if (!$user || !$updatedUser) {
+        $deleteUser = $this->route('user');
+        if (!$user || !$deleteUser) {
             return false;
         }
         if (!$user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())) {
             return false;
         }
-        return $user->can("updateRole", $updatedUser);
+        return $user->can("delete", $deleteUser);
     }
 
     /**
@@ -35,7 +33,7 @@ class UpdateUserRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "role" => ['required', 'string', Rule::enum(UserRolesEnums::class)],
+
         ];
     }
 }

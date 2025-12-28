@@ -4,6 +4,7 @@ namespace App\Modules\Admin\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
+use App\Modules\Admin\Http\Requests\AdminDeleteUserRequest;
 use App\Modules\Admin\Http\Requests\IndexAdminUsersRequest;
 use App\Modules\Admin\Http\Requests\UpdateUserRoleRequest;
 use App\Modules\Admin\Http\Resources\AdminUserResource;
@@ -53,9 +54,9 @@ class UserController extends ApiController
             if (UserManagmentService::banUser($user)) {
 
                 return $this->respondOk("User banded");
-            } else {
-                return $this->respondError("FAILD TO BAN USER");
             }
+
+            return $this->respondError("FAILED TO BAN USER");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR  " .  $th->getMessage());
         }
@@ -69,27 +70,28 @@ class UserController extends ApiController
             }
             if (UserManagmentService::unbanUser($user)) {
 
-                return $this->respondOk("User unbaned");
-            } else {
-                return $this->respondError("FAILD TO UNBAN USER");
+                return $this->respondOk("User un baned");
             }
+
+            return $this->respondError("FAILED TO UNBAN USER");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR  " .  $th->getMessage());
         }
     }
-    public function delete(User $user)
+    public function delete( AdminDeleteUserRequest $request, User $user)
     {
 
         try {
+            $request->validated();
             if (!$user) {
                 return $this->respondNotFound("NOT FOUND ITEM");
             }
             if (UserManagmentService::deleteUser($user)) {
 
                 return $this->respondOk("User deleted");
-            } else {
-                return $this->respondError("FAILD TO DELETE USER");
             }
+
+            return $this->respondError("FAILED TO DELETE USER");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR  " .  $th->getMessage());
         }
@@ -104,10 +106,10 @@ class UserController extends ApiController
             }
             if (UserManagmentService::roleUser($user, $validate['role'])) {
 
-                return $this->respondOk("User role updared");
-            } else {
-                return $this->respondError("FAILD TO UPDATE USER ROLE");
+                return $this->respondOk("User role updated");
             }
+
+            return $this->respondError("FAILED TO UPDATE USER ROLE");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR  " .  $th->getMessage());
         }

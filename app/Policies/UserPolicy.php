@@ -66,7 +66,8 @@ class UserPolicy
         // no one can change super admin information
         if( $model->hasRole(UserRolesEnums::SUPER_ADMIN())){
             if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_ADMINS())){
-                return true;
+                // if last super admin return false  can't delete it
+               return (User::role(UserRolesEnums::SUPER_ADMIN())->count() > 1);
             }
 
             return false;
@@ -105,6 +106,24 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
+        return false;
+    }
+    public function updateRole(User $user , User $model)
+    {
+        // no one can change super admin information
+        if( $model->hasRole(UserRolesEnums::SUPER_ADMIN())){
+            if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_ADMINS())){
+                // if last super admin return false  can't delete it
+                return (User::role(UserRolesEnums::SUPER_ADMIN())->count() > 1);
+            }
+
+            return false;
+        }
+
+        if($user->hasPermissionTo(PermissionsKeyEnum::MANAGE_USER())){
+            return true;
+        }
+
         return false;
     }
 }
