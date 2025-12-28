@@ -6,6 +6,8 @@ use App\Http\Requests\Auth\CreateUserRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends ApiController
@@ -47,5 +49,11 @@ class AuthController extends ApiController
             'user' =>new UserResource($user),
             'token' => $token,
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return $this->respondOk("user logout");
     }
 }
