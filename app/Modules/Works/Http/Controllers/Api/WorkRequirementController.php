@@ -26,9 +26,9 @@ class WorkRequirementController extends ApiController
                     "workRequirement" => $workRequirement,
                 ]);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            return $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return  $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -39,16 +39,16 @@ class WorkRequirementController extends ApiController
     public function show(Work $work, WorkRequirement $workRequirement)
     {
         try {
-            if ($workRequirement) {
+            if ($workRequirement && $work->is($workRequirement->work)) {
 
 
                 return $this->respondWithSuccess([
                     "workRequirement" => $workRequirement,
                 ]);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            return $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ class WorkRequirementController extends ApiController
 
             $workRequirement = WorkRequirement::create([
                 'name' => $validation['name'],
-                'description' => $validation['description'],
+                'description' => $validation['description'] ?? null,
                 'level' => $validation['level'],
                 'work_id' => $work->id
             ]);
@@ -71,9 +71,9 @@ class WorkRequirementController extends ApiController
                 return $this->respondCreated([
                     "workRequirement" => $workRequirement
                 ]);
-            } else {
-                return $this->respondError("ERROR TO STORE");
             }
+
+            return $this->respondError("ERROR TO STORE");
         } catch (Exception $e) {
             return $this->respondError("ERROR TO STORE" . $e->getMessage());
         }
@@ -87,16 +87,16 @@ class WorkRequirementController extends ApiController
         $validation = $request->validated();
         try {
             $workRequirement->name     = $validation['name'];
-            $workRequirement->description = $validation['description'];
+            $workRequirement->description = $validation['description'] ?? null;
             $workRequirement->level = $validation['level'];
             if ($workRequirement->save()) {
                 return $this->respondWithSuccess([
                     "message" => "item updated",
                     "workRequirement" => $workRequirement
                 ]);
-            } else {
-                return $this->respondError("ERROR UPDATE course ");
             }
+
+            return $this->respondError("ERROR UPDATE course ");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR UPDATE course " . $th->getMessage());
         }
@@ -111,9 +111,9 @@ class WorkRequirementController extends ApiController
                 $workRequirement->delete();
                 return $this->respondOk("Item deleted");
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            return  $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return   $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 }

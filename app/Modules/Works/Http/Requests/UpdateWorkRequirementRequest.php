@@ -31,7 +31,7 @@ class UpdateWorkRequirementRequest extends FormRequest
     {
         return [
             "name" => 'required|string|max:255',
-            "description" => 'required|string',
+            "description" => 'nullable|string',
             "level" => "required|string|max:255"
         ];
     }
