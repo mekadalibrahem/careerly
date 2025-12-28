@@ -231,7 +231,8 @@
                     <h2>Skills</h2>
                     <div class="skill-list">
                     @foreach($data['skills'] as $skill)
-                            <p> {{$skill->name ?? ''}}</p>
+                            <p> {{$skill->name ?? ''}}</p>:
+                            <p> {{$skill->level ?? ''}}</p>
                     @endforeach
                     </div>
                 </section>

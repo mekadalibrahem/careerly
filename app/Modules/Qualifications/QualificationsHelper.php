@@ -26,6 +26,7 @@ class QualificationsHelper
 
             return [
                 'name' => $skill->name,
+                'level' => $skill->level,
             ];
         })->values();
 

@@ -27,9 +27,9 @@ class SkillController extends ApiController
                     "skills" => $skills,
                 ]);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            return  $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -45,15 +45,16 @@ class SkillController extends ApiController
 
             $skill = Skill::create([
                 'name' => $validation['name'],
+                "level" =>$validation['level'],
                 'user_id' => $user->id
             ]);
             if ($skill) {
                 return $this->respondCreated([
                     "skill" => $skill
                 ]);
-            } else {
-                return $this->respondError("ERROR TO STORE YOUR SKILL");
             }
+
+            return $this->respondError("ERROR TO STORE YOUR SKILL");
         } catch (Exception $e) {
             return $this->respondError("ERROR TO STORE YOUR SKILL" . $e->getMessage());
         }
@@ -72,9 +73,9 @@ class SkillController extends ApiController
                     "skill" => $skill,
                 ]);
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 
@@ -87,14 +88,15 @@ class SkillController extends ApiController
         $validation = $request->validated();
         try {
             $skill->name = $validation['name'];
+            $skill->level = $validation['level'];
             if ($skill->save()) {
                 return $this->respondWithSuccess([
                     "message" => "skill updated",
                     "skill" => $skill
                 ]);
-            } else {
-                return $this->respondError("ERROR UPDATE SKILL ");
             }
+
+            return $this->respondError("ERROR UPDATE SKILL ");
         } catch (\Throwable $th) {
             return $this->respondError("ERROR UPDATE SKILL " . $th->getMessage());
         }
@@ -111,9 +113,9 @@ class SkillController extends ApiController
                 $skill->delete();
                 return $this->respondOk("Item deleted");
             }
-            $this->respondNotFound("FAILD ITEM DELETED  NOT FOUND");
+            return $this->respondNotFound("FAILED ITEM DELETED  NOT FOUND");
         } catch (\Throwable $th) {
-            $this->respondError("FAILD ITEM DELETED " . $th->getMessage());
+            return   $this->respondError("FAILED ITEM DELETED " . $th->getMessage());
         }
     }
 }
