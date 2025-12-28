@@ -46,6 +46,9 @@ class UserManagmentService
         if ( array_key_exists('email', $params)) {
             $query->whereLike('email', $params['email']);
         }
+        if ( array_key_exists('searchString', $params)) {
+            $query->whereAny(['email','name'], 'like', "%".$params['searchString']."%");
+        }
 //
         return AdminUserResource::collection($query->paginate($per_page));
     }

@@ -35,6 +35,7 @@ class IndexAdminUsersRequest extends FormRequest
             "role" => ['nullable', 'string', Rule::enum(UserRolesEnums::class)],
             'deleted' => ['nullable','string' , Rule::enum(SoftDeletedEnum::class)],
             'email' => ['nullable' , 'string'],
+            "searchString" => "nullable|string",
             'after_created_at' => ['nullable' ,'date' ],
             'before_created_at' => ['nullable' ,'date' ],
             "per_page" => ['nullable' , 'int'],
