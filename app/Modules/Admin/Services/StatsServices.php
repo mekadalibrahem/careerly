@@ -18,7 +18,8 @@ class StatsServices
     public static string $CACHE_KEY_STATS_DASHBOARD_ADMIN =  "stats.dashboard";
     public static function getAllStat():array{
 
-       return Cache::remember(self::$CACHE_KEY_STATS_DASHBOARD_ADMIN, (60 * 15), static function () {
+      
+        
             return [
                 //users_by_role
                 "total_users"         => self::getUserCount(),
@@ -32,6 +33,8 @@ class StatsServices
                     "request_by_types"  => self::AIRequestcountByType(),
                 ]
             ];
-       });
+    
+      
+
     }
 }

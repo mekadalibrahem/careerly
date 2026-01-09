@@ -12,4 +12,4 @@ Artisan::command('inspire', function () {
 
 Schedule::job(new ClearWorkflowCallsAsTimeout)->daily();
 Schedule::job(new \App\Jobs\ClearExpiredTempDownloadFilesJob())->daily();
-Schedule::job(new \App\Jobs\CalcStatForAdminJob())->everyFifteenMinutes();
+// Schedule::job(new \App\Jobs\CalcStatForAdminJob())->everyFifteenMinutes();
