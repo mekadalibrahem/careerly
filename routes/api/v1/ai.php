@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middlewares\BanUserMiddleware;
 use App\Modules\N8n\Http\Controllers\CvAnaliserController;
 use App\Modules\N8n\Http\Controllers\RateApplicantController;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +10,7 @@ Route::group([
 
 ], function () {
     Route::group([
-        'middleware' => ['auth:sanctum'],
+        'middleware' => ['auth:sanctum', BanUserMiddleware::class],
     ], function () {
         // Route::post('/analyze-cv', [CvAnaliserController::class, 'analyzeCV']);
         Route::get('user/{user}/analyze-cv', [CvAnaliserController::class, 'analyzeCV'])->name("ai.user.analyzeCv");

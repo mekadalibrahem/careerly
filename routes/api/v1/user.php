@@ -3,6 +3,8 @@
 
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\UserNotificationController;
+use App\Http\Middlewares\BanUserMiddleware;
+use App\Modules\Exports\Http\Controllers\CvStylesController;
 use App\Modules\Qualifications\Http\Controllers\Api\CourseController;
 use App\Modules\Qualifications\Http\Controllers\Api\EducationController;
 use App\Modules\Qualifications\Http\Controllers\Api\ProjectController;
@@ -20,7 +22,7 @@ Route::group([
     Route::group([
         'prefix' => "user",
         'as' => 'user.',
-        'middleware' => ['auth:sanctum']
+        'middleware' => ['auth:sanctum', BanUserMiddleware::class]
     ], function () {
         Route::put('/{id}/password/update', [AccountController::class, 'updatePassword'])->name('password.update');
         Route::put('/{id}/update', [AccountController::class, 'updateAccount'])->name('account.update');
@@ -30,8 +32,8 @@ Route::group([
         Route::apiResource("/{user}/educations", EducationController::class);
         Route::apiResource("/{user}/applicants", UserApplicantController::class);
         Route::put("/{user}/applicants/{applicant}/accept", [WorkApplicantManagmentController::class, 'accept'])->name('users.applicants.accept');
-        Route::get("/{user}/notifications", [UserNotificationController::class, 'index']);
-        Route::get("/{user}/notifications/{id}", [UserNotificationController::class, 'show']);
+        Route::get("/{user}/notifications", [UserNotificationController::class, 'index'])->withoutMiddleware(BanUserMiddleware::class);
+        Route::get("/{user}/notifications/{id}", [UserNotificationController::class, 'show'])->withoutMiddleware(BanUserMiddleware::class);
         Route::delete("/{user}/notifications", [UserNotificationController::class, 'destroyAll']);
         Route::delete("/{user}/notifications/{id}", [UserNotificationController::class, 'destroy']);
         Route::put("/{user}/notifications/markReadAll", [UserNotificationController::class, 'markdReadAll']);
@@ -49,5 +51,5 @@ Route::group([
         Route::get("/{supportTicket}" , [SupportTicketsController::class, "show"])->name('support.show');
         Route::post("/" , [SupportTicketsController::class, "store"])->name('support.store');
     });
-    Route::get("/cv-styles" , [\App\Modules\Exports\Http\Controllers\CvStylesController::class , 'index']);
+    Route::get("/cv-styles" , [CvStylesController::class , 'index']);
 });

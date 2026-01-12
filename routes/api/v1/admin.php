@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middlewares\BanUserMiddleware;
 use App\Modules\Admin\Http\Controllers\Api\StatsController;
 use App\Modules\Admin\Http\Controllers\Api\UserController;
 use App\Modules\Admin\Http\Middleware\HasAdminRoleMiddleware;
@@ -11,7 +12,7 @@ Route::group([
 
 ], function () {
     Route::group([
-        'middleware' => ['auth:sanctum', HasAdminRoleMiddleware::class],
+        'middleware' => ['auth:sanctum', HasAdminRoleMiddleware::class, BanUserMiddleware::class],
     ], function () {
         Route::group([
             "prefix" => "admin",

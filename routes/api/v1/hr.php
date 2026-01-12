@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middlewares\BanUserMiddleware;
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantController;
 use App\Modules\Works\Http\Controllers\Api\WorkApplicantManagmentController;
 use App\Modules\Works\Http\Controllers\Api\WorkController;
@@ -14,7 +15,7 @@ Route::group([
 ], function () {
     Route::get("works/types", [WorkTypesController::class, 'index'])->name("works.types");
     Route::group([
-        'middleware' => ['auth:sanctum']
+        'middleware' => ['auth:sanctum', BanUserMiddleware::class]
     ], function () {
         Route::put("works/{work}/activate", [WorkStatusController::class, 'activate'])->name("works.activate");
         Route::put("works/{work}/close", [WorkStatusController::class, 'close'])->name("works.close");
@@ -26,6 +27,6 @@ Route::group([
         // Route::post("works/{work}/selectApplicant", [WorkApplicantController::class, 'selectApplicant'])->name('works.applicants.selectApplicant');
         Route::put("works/{work}/applicants/{applicant}/reject", [WorkApplicantManagmentController::class, 'reject'])->name('works.applicants.reject');
         Route::put("works/{work}/applicants/{applicant}/select", [WorkApplicantManagmentController::class, 'select'])->name('works.applicants.select');
-      
+
     });
 });
