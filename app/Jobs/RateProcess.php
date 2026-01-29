@@ -37,6 +37,7 @@ class RateProcess implements ShouldQueue
             /** ---------------------------------------------
              *  STEP 1 — Fetch Work with Relations
              * --------------------------------------------*/
+           
             $work = Work::with(['workRequirements', 'applicants'])
                 ->find($this->workId);
 
@@ -48,8 +49,16 @@ class RateProcess implements ShouldQueue
             /** ---------------------------------------------
              *  STEP 2 — Prepare Applicants
              * --------------------------------------------*/
+           
             $applicants = $work->applicants;
+            if (empty($applicants)) {
+                logger()->error( " rate job :  end_here (start step 2) No applicants found");
+                event(new RateApplicantProcessed($work->id, "No applicants found"));
+                throw new InvalidArgumentException("No applicants for work ID {$this->workId}");
+            }
+            
             $filteredIds = [];
+            
             // If specific applicant IDs are provided, filter by user_id
             if (!is_null($this->applicants_ids) && is_array($this->applicants_ids)) {
                 // Ensure all IDs are integers (optional safety)
@@ -60,24 +69,27 @@ class RateProcess implements ShouldQueue
                     $applicants = $applicants->only($filteredIds);
                 }
             }
+           
             $applicants = $applicants->map(function ($app) {
-                return [
+                $qualifications = QualificationsHelper::preperForAi($app->user_id);
+                if($qualifications != null){
+                    return [
                     "user_id"        => $app->user_id,
                     "work_id"        => $app->work_id,
-                    "qualifications" => QualificationsHelper::preperForAi($app->id),
+                    "qualifications" => $qualifications
                 ];
+                }
+                
             })->toArray();
 
-            if (empty($applicants)) {
-                event(new RateApplicantProcessed($work->id, "No applicants found"));
-                throw new InvalidArgumentException("No applicants for work ID {$this->workId}");
-            }
+            
 
 
-
+            
             /** ---------------------------------------------
              *  STEP 3 — Chunk Applicants
              * --------------------------------------------*/
+            
             $chunks     = array_chunk($applicants, 5);
             $totalPages = count($chunks);
 
@@ -93,13 +105,14 @@ class RateProcess implements ShouldQueue
                 "work_requirements" => $work->workRequirements->map(fn($req) => [
                     "name"  => $req->name,
                     "level" => $req->level,
-                    "type"  => $req->type ?? null,   // optional if new approach requires type
+                    "type"  => $req->type ?? null,   
                 ])->toArray(),
             ];
 
             /** ---------------------------------------------
              *  STEP 5 — Trigger Workflow per Chunk
              * --------------------------------------------*/
+            
             foreach ($chunks as $i => $chunk) {
                 $payload = [
                     ...$workPayload,
